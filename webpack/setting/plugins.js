@@ -8,7 +8,7 @@ const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 
 const {isProduction, isDevelopment, isBuildLibrary} = require('./../config');
-const filePathPrefix = isProduction ? './../' : './';
+const filePathPrefix = isProduction ? './' : './';
 
 const date = new Date();
 

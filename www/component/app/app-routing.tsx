@@ -1,10 +1,8 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {StaticRouter} from 'react-router-dom/server';
+import {Route, Routes, HashRouter} from 'react-router-dom';
 
 import {Home} from '../../page/home/home';
 import {AsyncInfo} from '../../page/info/info-async';
 import {Error404} from '../../page/error-404/error-404';
-import {isBrowser} from '../../util/system';
 
 import {appRoute} from './app-route';
 
@@ -26,9 +24,5 @@ export function AppRouting(props: PropsType): JSX.Element {
         </Routes>
     );
 
-    if (isBrowser) {
-        return <BrowserRouter>{switchNode}</BrowserRouter>;
-    }
-
-    return <StaticRouter location={server.defaultRoutingPathname}>{switchNode}</StaticRouter>;
+    return <HashRouter>{switchNode}</HashRouter>;
 }

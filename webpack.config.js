@@ -11,7 +11,6 @@ const {plugins} = require('./webpack/setting/plugins');
 const {devServer} = require('./webpack/setting/dev-server');
 
 const {
-    pathToStaticFileFolder,
     isDevelopment,
     isProduction,
     pathToDist,
@@ -33,7 +32,7 @@ const configFront = {
     output: {
         pathinfo: false,
         path: path.join(cwd, pathToDist),
-        publicPath: isDevelopment ? '/' : pathToStaticFileFolder,
+        publicPath: isDevelopment ? '/' : '',
         filename: isDevelopment ? '[name].js' : 'index.js',
         chunkFilename: isDevelopment ? '[name].chunk.js' : '[name].[hash:6].chunk.js',
         assetModuleFilename: isDevelopment
@@ -79,30 +78,6 @@ const configLibraryFront = {
     devServer,
     externalsPresets,
     externals,
-
-    /*
-    externals: {
-        // Don't bundle react and react-dom
-        react: {
-            commonjs: 'react',
-            commonjs2: 'react',
-            amd: 'React',
-            root: 'React',
-        },
-        'react-dom': {
-            commonjs: 'react-dom',
-            commonjs2: 'react-dom',
-            amd: 'ReactDOM',
-            root: 'ReactDOM',
-        },
-        'react-router-dom': {
-            commonjs: 'react-router-dom',
-            commonjs2: 'react-router-dom',
-            amd: 'ReactRouterDOM',
-            root: 'ReactRouterDOM',
-        },
-    },
-*/
 };
 
 const configLibraryBack = {...configLibraryFront};
