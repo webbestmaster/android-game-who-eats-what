@@ -34,7 +34,8 @@ const contentStringFull = contentStringBegin + contentStringEnd;
 (async () => {
     const indexHtml: string = await fileSystem.readFile('./dist/index.html', 'utf-8');
 
-    function getHtmlStringByRequest(request: FastifyRequest): string {
+    // function getHtmlStringByRequest(request: FastifyRequest): string {
+    function getHtmlStringByRequest(): string {
         const htmlString = ReactDOMServer.renderToStaticMarkup(
             <App server={appProps.server} serverData={defaultServerDataContextConst} />
         );
@@ -71,9 +72,7 @@ const contentStringFull = contentStringBegin + contentStringEnd;
     fastify.get('/', async (request: FastifyRequest, reply: FastifyReply): Promise<string> => {
         reply.type('text/html');
 
-        // throw new Error('asd');
-
-        return getHtmlStringByRequest(request);
+        return getHtmlStringByRequest();
     });
 
     fastify.setErrorHandler((error: FastifyError, request: FastifyRequest, reply: FastifyReply) => {

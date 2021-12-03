@@ -56,3 +56,17 @@ export function getUniqueListByKey<ItemType>(list: Array<ItemType>, keyName: key
         return accum;
     }, []);
 }
+
+export function getNextArrayLoopIndex(array: Array<unknown>, currentIndex: number): number {
+    const {length} = array;
+    const increasedIndex = currentIndex + 1;
+
+    return increasedIndex >= length ? 0 : increasedIndex;
+}
+
+export function getPreviousArrayLoopIndex(array: Array<unknown>, currentIndex: number): number {
+    const {length} = array;
+    const decreasedIndex = currentIndex - 1;
+
+    return decreasedIndex < 0 ? length - 1 : decreasedIndex;
+}
