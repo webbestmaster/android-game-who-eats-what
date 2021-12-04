@@ -2,7 +2,7 @@
     "compilerOptions": {
         "outDir": "./tsc-check/",
 
-        "target": "es2019",
+        "target": "es5",
         "jsx": "react-jsx",
         "module": "es2020",
         "moduleResolution": "node",

@@ -39,7 +39,7 @@ const configFront = {
             ? 'build-asset/[name]----[hash:6][ext][query]'
             : 'build-asset/[hash:6][ext][query]',
     },
-
+    target: ['web', 'es5'],
     mode: nodeEnvironment,
     devtool: isDevelopment ? 'source-map' : false,
     optimization,
@@ -68,7 +68,7 @@ const configLibraryFront = {
         filename: 'index.js',
         libraryTarget: 'commonjs2',
     },
-
+    target: ['web', 'es5'],
     mode: nodeEnvironment,
     devtool: false,
     optimization,

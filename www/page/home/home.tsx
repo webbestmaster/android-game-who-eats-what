@@ -12,5 +12,13 @@ export function Home(): JSX.Element {
         list: ambientAudioList,
     });
 
-    return <div className={homeStyle.home}>home</div>;
+    const onClickEvent = () => {
+        alert('1234');
+    };
+
+    return (
+        <div onClick={onClickEvent} className={homeStyle.home}>
+            home
+        </div>
+    );
 }
