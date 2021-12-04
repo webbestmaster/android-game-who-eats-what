@@ -12,7 +12,7 @@ const cssLoader = isProduction ? MiniCssExtractPlugin.loader : styleLoader;
 
 module.exports.rules = [
     {
-        test: /\.(tsx?|js)$/,
+        test: isProduction ? /\.(tsx?|js)$/ : /\.tsx?$/,
         exclude: isProduction ? [] : /node_modules/,
         use: [
             {
