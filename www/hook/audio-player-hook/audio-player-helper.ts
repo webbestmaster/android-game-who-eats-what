@@ -36,10 +36,11 @@ export function playAudio(playAudioData: PlayAudioArgumentType): Promise<unknown
         audio.oncanplay = async () => {
             // eslint-disable-next-line unicorn/prefer-add-event-listener
             audio.oncanplay = null;
-            audio.playbackRate = 16;
+            // audio.playbackRate = 16;
 
             try {
                 await audio.play();
+                console.log('[playAudio]', src);
                 resolve();
                 // eslint-disable-next-line unicorn/prefer-optional-catch-binding
             } catch (tryToPlayError: unknown) {
