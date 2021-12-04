@@ -5,7 +5,7 @@ export type AudioPlayerConfigType = {
     isLoop: boolean;
     isPlaying: boolean;
     isShuffle: boolean;
-    list: Array<string>;
+    trackList: Array<string>;
 };
 
 /*

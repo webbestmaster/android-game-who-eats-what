@@ -1,72 +1,87 @@
 /* global setTimeout */
 
-import {useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {getRandomNumber} from '../../util/number';
 import {getNextArrayLoopIndex} from '../../util/array';
 
 import {AudioPlayerConfigType, AudioPlayerType} from './audio-player-type';
-import {getAudioById} from './audio-player-const';
+import {getAudioById, playAudio, PlayAudioArgumentType} from './audio-player-helper';
 
 export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
-    const {isPlaying, isShuffle, list, isLoop, audioId} = config;
-    const [audioIndex, setAudioIndex] = useState<number>(isShuffle ? getRandomNumber(0, list.length) : 0);
+    const {
+        isPlaying: isPlayingInitial,
+        isShuffle: isShuffleInitial,
+        trackList: trackListInitial,
+        isLoop: isLoopInitial,
+        audioId: audioIdInitial,
+    } = config;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+    const [isPlaying, setIsPlaying] = useState<boolean>(isPlayingInitial);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+    const [isShuffle, setIsShuffle] = useState<boolean>(isShuffleInitial);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+    const [trackList, setTrackList] = useState<Array<string>>(trackListInitial);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+    const [isLoop, setIsLoop] = useState<boolean>(isLoopInitial);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+    const [audioId, setAudioId] = useState<string>(audioIdInitial);
+    const [audioIndex, setAudioIndex] = useState<number>(isShuffleInitial ? getRandomNumber(0, trackList.length) : 0);
     const [counter, setCounter] = useState<number>(0);
 
+    const src = trackList[audioIndex];
+    const trackListLength = trackList.length;
+
+    // eslint-disable-next-line complexity
+    const onAudioEnded = useCallback(() => {
+        const nextIndex = isShuffle
+            ? getRandomNumber(0, trackListLength)
+            : getNextArrayLoopIndex(trackListLength, audioIndex);
+
+        const isShouldPlayNext = isShuffle || isLoop || nextIndex !== 0;
+
+        if (!isShouldPlayNext) {
+            return;
+        }
+
+        setAudioIndex(nextIndex);
+
+        if (nextIndex === audioIndex) {
+            setCounter(counter + 1);
+        }
+    }, [isShuffle, isLoop, audioIndex, counter, trackListLength]);
+
     useEffect(() => {
-        const audio = getAudioById(audioId);
-
-        audio.pause();
-        audio.currentTime = 0;
-
         if (!isPlaying) {
             return;
         }
 
-        // eslint-disable-next-line complexity
-        function onAudioEnded() {
-            audio.removeEventListener('ended', onAudioEnded, false);
+        const audio = getAudioById(audioId);
 
-            const nextIndex = isShuffle ? getRandomNumber(0, list.length) : getNextArrayLoopIndex(list, audioIndex);
+        const playAudioData: PlayAudioArgumentType = {audioId, src};
 
-            const isShouldPlayNext = isShuffle || isLoop || nextIndex !== 0;
+        playAudio(playAudioData)
+            .then(() => {
+                console.log('[useAudioPlayer]: play', src);
 
-            if (!isShouldPlayNext) {
-                return;
-            }
-
-            setAudioIndex(nextIndex);
-
-            if (nextIndex === audioIndex) {
-                setCounter(counter + 1);
-            }
-        }
-
-        audio.addEventListener('ended', onAudioEnded, false);
-
-        function onError(audioPlayError: Error): void {
-            console.log('[useAudioPlayer]: can not play audio', list[audioIndex]);
-            console.log(audioPlayError);
-
-            audio
-                .play()
-                .then((): void => console.log('[useAudioPlayer]: play', list[audioIndex]))
-                .catch((setTimeoutError: Error) => {
-                    setTimeout((): void => onError(setTimeoutError), 1e3);
-                });
-        }
-
-        audio.src = list[audioIndex];
-
-        audio
-            .play()
-            .then((): void => console.log('[useAudioPlayer]: play', list[audioIndex]))
-            .catch(onError);
-    }, [audioIndex, audioId, isLoop, isPlaying, isShuffle, list, counter]);
+                // eslint-disable-next-line unicorn/prefer-add-event-listener
+                audio.onended = () => {
+                    // eslint-disable-next-line unicorn/prefer-add-event-listener
+                    audio.onended = null;
+                    onAudioEnded();
+                };
+            })
+            .catch((playAudioError: Error) => {
+                console.log('[useAudioPlayer]: can not play audio', src);
+                console.log(playAudioError);
+                setTimeout((): void => setCounter(counter + 1), 1e3);
+            });
+    }, [audioId, counter, isPlaying, onAudioEnded, src]);
 
     return useMemo<AudioPlayerType>((): AudioPlayerType => {
         return {
             getCurrentAudio: () => getAudioById(audioId),
+            // play audio by src and audioId
         };
     }, [audioId]);
 }
