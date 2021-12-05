@@ -40,10 +40,11 @@ export function playAudio(playAudioData: PlayAudioArgumentType): Promise<unknown
 
             try {
                 await audio.play();
-                console.log('[playAudio]', src);
+                console.log(`[playAudio]: ${src}`);
                 resolve();
                 // eslint-disable-next-line unicorn/prefer-optional-catch-binding
             } catch (tryToPlayError: unknown) {
+                console.log(`[ERROR] [playAudio]: ${src}`);
                 reject();
             }
         };

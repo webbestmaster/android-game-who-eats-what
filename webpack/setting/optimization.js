@@ -93,7 +93,7 @@ module.exports.optimization = isDevelopment
                           beautify: false,
                       },
                       compress: {
-                          pure_funcs: ['console.log'], // eslint-disable-line camelcase, id-match
+                          // pure_funcs: ['console.log'], // eslint-disable-line camelcase, id-match
                           passes: 3,
                       },
                   },

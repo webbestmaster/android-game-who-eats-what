@@ -38,7 +38,7 @@ export function getSavedLocaleName<LocaleName extends string>(localeNameList: Ar
 }
 
 export function saveLocaleName<LocaleName extends string>(localeName: LocaleName): LocaleName {
-    console.log('---> save localeName localStorage:', localeConst.key.localStorage.localeName, localeName);
+    console.log(`---> save localeName localStorage: ${localeConst.key.localStorage.localeName}, ${localeName}`);
     localStorage.setItem(localeConst.key.localStorage.localeName, localeName);
 
     return localeName;

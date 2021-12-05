@@ -62,7 +62,7 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
 
         playAudio(playAudioData)
             .then(() => {
-                console.log('[useAudioPlayer]: play', src);
+                console.log(`[useAudioPlayer]: play - ${src}`);
 
                 // eslint-disable-next-line unicorn/prefer-add-event-listener
                 audio.onended = () => {
@@ -72,8 +72,8 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
                 };
             })
             .catch((playAudioError: Error) => {
-                console.log('[useAudioPlayer]: can not play audio', src);
-                console.log(playAudioError);
+                console.log(`[ERROR] [useAudioPlayer]: can not play audio: ${src}`);
+                console.log(`[ERROR] [useAudioPlayer]: ${playAudioError.message}`);
                 setTimeout((): void => setCounter(counter + 1), 1e3);
             });
     }, [audioId, counter, isPlaying, onAudioEnded, src]);
