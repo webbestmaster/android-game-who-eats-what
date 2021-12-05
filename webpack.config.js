@@ -20,10 +20,12 @@ const {
     isFront,
     isBack,
     isServerProdBuild,
+    polyfillList,
 } = require('./webpack/config');
 
 const configFront = {
     entry: [
+        ...polyfillList,
         './www/css/root.scss',
         'markdown-pro/dist/style.css',
         'react-audio-player-pro/dist/style.css',

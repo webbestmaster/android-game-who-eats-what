@@ -32,3 +32,7 @@ module.exports.isFront = isFront;
 module.exports.isBack = isBack;
 module.exports.isTsTranspileOnly = isTsTranspileOnly;
 module.exports.isServerProdBuild = isServerProdBuild;
+
+const polyfillList = ['es5-shim', 'es6-shim', 'es7-object-polyfill'];
+
+module.exports.polyfillList = isProduction ? polyfillList : [];

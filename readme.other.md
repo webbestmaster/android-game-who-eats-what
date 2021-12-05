@@ -41,3 +41,12 @@ depcheck
 $ [sudo] npm i -g depcheck
 $ depcheck
 ```
+
+
+### Old browser polyfill
+
+```bash
+npm i es5-shim
+npm i es6-shim
+npm i es7-object-polyfill
+```

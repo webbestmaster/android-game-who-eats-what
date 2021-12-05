@@ -16,7 +16,7 @@ export function Home(): JSX.Element {
 
     const onClickEvent = () => {
         // eslint-disable-next-line no-undef, no-alert
-        alert('1234');
+        alert('333322');
     };
 
     return (
