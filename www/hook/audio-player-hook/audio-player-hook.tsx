@@ -71,9 +71,9 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
                     onAudioEnded();
                 };
             })
-            .catch((playAudioError: Error) => {
+            .catch((playAudioError: unknown) => {
                 console.log(`[ERROR] [useAudioPlayer]: can not play audio: ${src}`);
-                console.log(`[ERROR] [useAudioPlayer]: ${playAudioError.message}`);
+                console.log(`[ERROR] [useAudioPlayer]: ${playAudioError}`);
                 setTimeout((): void => setCounter(counter + 1), 1e3);
             });
     }, [audioId, counter, isPlaying, onAudioEnded, src]);
