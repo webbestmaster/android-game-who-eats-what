@@ -24,13 +24,7 @@ const {
 } = require('./webpack/config');
 
 const configFront = {
-    entry: [
-        ...polyfillList,
-        './www/css/root.scss',
-        'markdown-pro/dist/style.css',
-        'react-audio-player-pro/dist/style.css',
-        './www/root.tsx',
-    ],
+    entry: [...polyfillList, './www/css/root.scss', './www/root.tsx'],
     output: {
         pathinfo: false,
         path: path.join(cwd, pathToDist),

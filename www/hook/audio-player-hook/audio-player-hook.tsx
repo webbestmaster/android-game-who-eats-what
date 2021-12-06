@@ -8,6 +8,7 @@ import {getNextArrayLoopIndex} from '../../util/array';
 import {AudioPlayerConfigType, AudioPlayerType} from './audio-player-type';
 import {getAudioById, playAudio, PlayAudioArgumentType} from './audio-player-helper';
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
     const {
         isPlaying: isPlayingInitial,
@@ -77,6 +78,34 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
                 setTimeout((): void => setCounter(counter + 1), 1e3);
             });
     }, [audioId, counter, isPlaying, onAudioEnded, src]);
+
+    useEffect(() => {
+        console.log('/// begin - currentAudio = getAudioById');
+
+        return () => {
+            console.log('/// end - currentAudio = getAudioById');
+
+            const currentAudio = getAudioById(audioId);
+
+            try {
+                currentAudio.currentTime = 0;
+            } catch (currentTimeError: unknown) {
+                console.log(currentTimeError);
+            }
+
+            try {
+                currentAudio.volume = 0;
+            } catch (volumeError: unknown) {
+                console.log(volumeError);
+            }
+
+            try {
+                currentAudio.pause();
+            } catch (pauseError: unknown) {
+                console.log(pauseError);
+            }
+        };
+    }, [audioId]);
 
     return useMemo<AudioPlayerType>((): AudioPlayerType => {
         return {
