@@ -1,6 +1,7 @@
 /* global setTimeout */
 
 import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useDocumentVisibility} from 'react-system-hook';
 
 import {getRandomNumber} from '../../util/number';
 import {getNextArrayLoopIndex} from '../../util/array';
@@ -29,6 +30,7 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
     const [audioId, setAudioId] = useState<string>(audioIdInitial);
     const [audioIndex, setAudioIndex] = useState<number>(isShuffleInitial ? getRandomNumber(0, trackList.length) : 0);
     const [counter, setCounter] = useState<number>(0);
+    const isDocumentVisible = useDocumentVisibility();
 
     const src = trackList[audioIndex];
     const trackListLength = trackList.length;
@@ -88,24 +90,28 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
             const currentAudio = getAudioById(audioId);
 
             try {
-                currentAudio.currentTime = 0;
-            } catch (currentTimeError: unknown) {
-                console.log(currentTimeError);
-            }
-
-            try {
-                currentAudio.volume = 0;
-            } catch (volumeError: unknown) {
-                console.log(volumeError);
-            }
-
-            try {
                 currentAudio.pause();
             } catch (pauseError: unknown) {
                 console.log(pauseError);
             }
+
+            try {
+                currentAudio.currentTime = 0;
+            } catch (currentTimeError: unknown) {
+                console.log(currentTimeError);
+            }
         };
     }, [audioId]);
+
+    useEffect(() => {
+        const currentAudio = getAudioById(audioId);
+
+        try {
+            currentAudio.volume = isDocumentVisible ? 1 : 0;
+        } catch (volumeError: unknown) {
+            console.log(volumeError);
+        }
+    }, [isDocumentVisible, audioId]);
 
     return useMemo<AudioPlayerType>((): AudioPlayerType => {
         return {
