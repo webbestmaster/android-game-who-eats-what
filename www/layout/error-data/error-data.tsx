@@ -1,3 +1,4 @@
+/*
 import {classNames} from '../../util/css';
 
 import {LangKeyType} from '../../provider/locale/translation/type';
@@ -21,3 +22,4 @@ export function ErrorData(props: PropsType): JSX.Element {
         </div>
     );
 }
+*/
