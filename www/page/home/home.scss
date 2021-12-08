@@ -1,5 +1,27 @@
 .home {
     background-color: #c00;
     height: 100vh;
+    position: relative;
     width: 100vw;
+}
+
+.action_wrapper {
+    background-color: #eee;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    //opacity: 0.5;
+}
+
+.action_block {
+    background-color: #c00;
+    display: block;
+    height: 50px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 50px;
 }
