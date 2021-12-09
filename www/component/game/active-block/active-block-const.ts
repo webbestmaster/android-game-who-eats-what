@@ -1,3 +1,4 @@
+console.log('');
 // import {defaultSingleTouchCoordinates} from '../../../hook/single-touch-hook/single-touch-const';
 
 // import {InteractiveBlockStateType} from './active-block-type';

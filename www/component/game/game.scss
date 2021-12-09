@@ -17,6 +17,7 @@
     position: absolute;
     top: 0;
     width: 50px;
+    z-index: 2;
 }
 
 .drop_place {
@@ -27,4 +28,13 @@
     position: absolute;
     top: 0;
     width: 100px;
+}
+
+.event_hunter {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
 }

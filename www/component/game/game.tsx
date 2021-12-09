@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useScreenSize} from 'react-system-hook';
 
 import {useAudioPlayer} from '../../hook/audio-player-hook/audio-player-hook';
@@ -46,17 +46,51 @@ export function Game(): JSX.Element {
 
     const [activeBlockId, setActiveBlockId] = useState<string>('');
 
-    const singleTouch = useSingleTouch();
-    const {coordinates, isPressed} = singleTouch;
-    const {pageX, pageY} = coordinates;
+    const {coordinates, isPressed} = useSingleTouch();
+    const {pageY, pageX} = coordinates;
 
-    // block logics
-    // 1 - save default position to "reset" block state for wrong answer
+    /*
+        useEffect(() => {
+            if (isPressed) {
+                return;
+            }
+
+            console.log('check here is on coordinate');
+            console.log(activeBlockId, coordinates);
+
+            if (pageX < 150) {
+                // setActiveBlockId('');
+                console.log('placed drop');
+                console.log('check block id to show win or loose');
+            } else {
+                console.log('missed drop');
+            }
+        }, [isPressed, pageY, pageX, activeBlockId]);
+    */
+
+    useEffect(() => {
+        if (isPressed === false && activeBlockId !== '') {
+            console.info(!isPressed, activeBlockId);
+            console.log(pageX, pageY);
+        }
+    }, [isPressed, pageY, pageX, activeBlockId]);
+
+    /*
+    useEffect(() => {
+        if (isPressed) {
+            return;
+        }
+
+        setActiveBlockId('');
+    }, [isPressed]);
+*/
 
     return (
         <div className={gameStyle.game}>
             {/* just for debug */}
             <div className={gameStyle.drop_place}>mouth</div>
+
+            <div className={gameStyle.event_hunter} onTouchStart={() => setActiveBlockId('')} />
 
             {blockList.map((block: InteractiveBlockStateType): JSX.Element => {
                 const {blockId, defaultCoordinates} = block;

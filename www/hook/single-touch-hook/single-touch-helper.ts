@@ -31,5 +31,5 @@ export function getCoordinatesFromTouch(event: TouchEvent): SingleTouchCoordinat
 }
 
 export function getIsPressed(event: TouchEvent): boolean {
-    return event.touches.length === 0;
+    return event.touches.length > 0;
 }
