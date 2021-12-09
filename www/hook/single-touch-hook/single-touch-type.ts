@@ -5,6 +5,7 @@ export type SingleTouchCoordinatesType = {
 
 export type SingleTouchType = {
     coordinates: SingleTouchCoordinatesType;
-    // startCoordinates: SingleTouchCoordinatesType;
+    deltaCoordinates: SingleTouchCoordinatesType;
     isPressed: boolean;
+    startCoordinates: SingleTouchCoordinatesType;
 };

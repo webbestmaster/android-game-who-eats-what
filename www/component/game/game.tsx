@@ -5,6 +5,8 @@ import {sfxAudioList} from '../../audio/sfx/sfx';
 import {useSingleTouch} from '../../hook/single-touch-hook/single-touch-hook';
 
 import gameStyle from './game.scss';
+import {InteractiveBlockStateType} from './active-block/active-block-type';
+import {interactiveBlockState} from './active-block/active-block-const';
 
 export function Game(): JSX.Element {
     const ignoredAudioPlayer = useAudioPlayer({
@@ -15,6 +17,10 @@ export function Game(): JSX.Element {
         // trackList: ambientAudioList,
         trackList: sfxAudioList,
     });
+
+    const [blockData1, setBlockData1] = useState<InteractiveBlockStateType>(interactiveBlockState);
+    const [blockData2, setBlockData2] = useState<InteractiveBlockStateType>(interactiveBlockState);
+    const [blockData3, setBlockData3] = useState<InteractiveBlockStateType>(interactiveBlockState);
 
     const [activeBlockId, setActiveBlockId] = useState<string>('');
 

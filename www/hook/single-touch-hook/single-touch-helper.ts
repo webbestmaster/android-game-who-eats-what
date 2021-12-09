@@ -29,3 +29,7 @@ export function getCoordinatesFromTouch(event: TouchEvent): SingleTouchCoordinat
 
     return defaultSingleTouchCoordinates;
 }
+
+export function getIsPressed(event: TouchEvent): boolean {
+    return event.touches.length === 0;
+}
