@@ -2,7 +2,7 @@ import {SingleTouchCoordinatesType} from '../../../hook/single-touch-hook/single
 
 export type InteractiveBlockStateType = {
     blockId: string;
-    currentCoordinates: SingleTouchCoordinatesType;
+    // currentCoordinates: SingleTouchCoordinatesType;
     defaultCoordinates: SingleTouchCoordinatesType;
-    isActive: boolean;
+    // isActive: boolean;
 };

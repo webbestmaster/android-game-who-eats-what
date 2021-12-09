@@ -1,14 +1,16 @@
 import {useState} from 'react';
+import {useScreenSize} from 'react-system-hook';
 
 import {useAudioPlayer} from '../../hook/audio-player-hook/audio-player-hook';
 import {sfxAudioList} from '../../audio/sfx/sfx';
 import {useSingleTouch} from '../../hook/single-touch-hook/single-touch-hook';
+import {SingleTouchCoordinatesType} from '../../hook/single-touch-hook/single-touch-type';
 
 import gameStyle from './game.scss';
 import {InteractiveBlockStateType} from './active-block/active-block-type';
-import {interactiveBlockState} from './active-block/active-block-const';
 
 export function Game(): JSX.Element {
+    const {width, height} = useScreenSize();
     const ignoredAudioPlayer = useAudioPlayer({
         audioId: 'ambient',
         isLoop: true,
@@ -18,14 +20,34 @@ export function Game(): JSX.Element {
         trackList: sfxAudioList,
     });
 
-    const [blockData1, setBlockData1] = useState<InteractiveBlockStateType>(interactiveBlockState);
-    const [blockData2, setBlockData2] = useState<InteractiveBlockStateType>(interactiveBlockState);
-    const [blockData3, setBlockData3] = useState<InteractiveBlockStateType>(interactiveBlockState);
+    const blockList: Array<InteractiveBlockStateType> = [
+        {
+            blockId: 'one',
+            defaultCoordinates: {
+                pageX: 0,
+                pageY: 150,
+            },
+        },
+        {
+            blockId: 'two',
+            defaultCoordinates: {
+                pageX: 110,
+                pageY: 150,
+            },
+        },
+        {
+            blockId: 'three',
+            defaultCoordinates: {
+                pageX: 220,
+                pageY: 150,
+            },
+        },
+    ];
 
     const [activeBlockId, setActiveBlockId] = useState<string>('');
 
     const singleTouch = useSingleTouch();
-    const {coordinates} = singleTouch;
+    const {coordinates, isPressed} = singleTouch;
     const {pageX, pageY} = coordinates;
 
     // block logics
@@ -36,27 +58,24 @@ export function Game(): JSX.Element {
             {/* just for debug */}
             <div className={gameStyle.drop_place}>mouth</div>
 
-            <div
-                className={gameStyle.action_block}
-                onTouchStart={() => setActiveBlockId('1')}
-                style={{transform: `translate3d(${pageX}px,${pageY}px,0px)`}}
-            >
-                1
-            </div>
-            <div
-                className={gameStyle.action_block}
-                onTouchStart={() => setActiveBlockId('2')}
-                style={{transform: `translate3d(${pageX}px,${pageY}px,0px)`}}
-            >
-                2
-            </div>
-            <div
-                className={gameStyle.action_block}
-                onTouchStart={() => setActiveBlockId('3')}
-                style={{transform: `translate3d(${pageX}px,${pageY}px,0px)`}}
-            >
-                3
-            </div>
+            {blockList.map((block: InteractiveBlockStateType): JSX.Element => {
+                const {blockId, defaultCoordinates} = block;
+                const transformCoordinates: SingleTouchCoordinatesType =
+                    blockId === activeBlockId && isPressed ? coordinates : defaultCoordinates;
+
+                const transform = `translate3d(${transformCoordinates.pageX}px,${transformCoordinates.pageY}px,0px)`;
+
+                return (
+                    <div
+                        className={gameStyle.action_block}
+                        key={blockId}
+                        onTouchStart={() => setActiveBlockId(blockId)}
+                        style={{transform}}
+                    >
+                        {blockId}
+                    </div>
+                );
+            })}
         </div>
     );
 }
