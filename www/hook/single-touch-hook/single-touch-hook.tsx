@@ -2,11 +2,14 @@
 
 import {useCallback, useEffect, useState} from 'react';
 
-import {SingleTouchCoordinatesType, SingleTouchType} from './single-touch-type';
+import {noop} from '../../util/function';
+
+import {SingleTouchCoordinatesType, SingleTouchType, UseSingleTouchArgumentsType} from './single-touch-type';
 import {getBody, getCoordinatesFromTouch, getIsPressed} from './single-touch-helper';
 import {defaultSingleTouchCoordinates} from './single-touch-const';
 
-export function useSingleTouch(): SingleTouchType {
+export function useSingleTouch(data: UseSingleTouchArgumentsType): SingleTouchType {
+    const {onTouchEnd = noop} = data;
     const [coordinates, setCoordinates] = useState<SingleTouchCoordinatesType>(defaultSingleTouchCoordinates);
     const [startCoordinates, setStartCoordinates] = useState<SingleTouchCoordinatesType>(defaultSingleTouchCoordinates);
     const [deltaCoordinates, setDeltaCoordinates] = useState<SingleTouchCoordinatesType>(defaultSingleTouchCoordinates);
@@ -33,18 +36,22 @@ export function useSingleTouch(): SingleTouchType {
 
             setCoordinates(currentTouchCoordinates);
             setDeltaCoordinates(newDeltaCoordinates);
-
-            // console.log('onPointMove');
-            // console.log(event);
         },
         [startCoordinates]
     );
 
-    const onPointEnd = useCallback((event: TouchEvent) => {
-        setIsPressed(getIsPressed(event));
-        // console.log('onPointEnd');
-        // console.log(event);
-    }, []);
+    const onPointEnd = useCallback(
+        (event: TouchEvent) => {
+            const isNowPressed = getIsPressed(event);
+
+            setIsPressed(isNowPressed);
+
+            if (!isNowPressed) {
+                onTouchEnd(coordinates);
+            }
+        },
+        [coordinates, onTouchEnd]
+    );
 
     useEffect(() => {
         const body = getBody();

@@ -9,3 +9,7 @@ export type SingleTouchType = {
     isPressed: boolean;
     startCoordinates: SingleTouchCoordinatesType;
 };
+
+export type UseSingleTouchArgumentsType = {
+    onTouchEnd?: (coordinates: SingleTouchCoordinatesType) => void;
+};

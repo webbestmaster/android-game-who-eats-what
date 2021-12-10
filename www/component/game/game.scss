@@ -1,8 +1,22 @@
+@keyframes up-down {
+    0% {
+        transform: translate3d(0, -4%, 0);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
 .game {
     background-color: #eee;
+    background-image: url('./ui/cover.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
     height: 100%;
     left: 0;
-    opacity: 0.5;
+    overflow: hidden;
     position: absolute;
     top: 0;
     width: 100%;
@@ -10,31 +24,59 @@
 }
 
 .action_block {
-    background-color: #c00;
-    display: block;
-    height: 50px;
+    align-content: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     left: 0;
     position: absolute;
     top: 0;
-    width: 50px;
-    z-index: 2;
+}
+
+.action_block__image {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: block;
+    width: 75%;
 }
 
 .drop_place {
-    background-color: #0c0;
-    display: block;
-    height: 100px;
-    left: 0;
+    animation-direction: alternate-reverse;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: up-down;
+    animation-timing-function: ease-in-out;
+    background-color: transparent;
+    background-position: center center;
+    //background-color: #0c0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 0;
+    margin: 0;
+    outline: none;
+    padding: 0;
     position: absolute;
-    top: 0;
-    width: 100px;
+    z-index: 1;
 }
 
 .event_hunter {
     height: 100%;
     left: 0;
+    overflow: hidden;
     position: absolute;
     top: 0;
     width: 100%;
     z-index: 1;
+}
+
+.plate {
+    background-image: url('./ui/plate.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 0;
 }
