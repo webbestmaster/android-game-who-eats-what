@@ -42,11 +42,16 @@ export function Game(props: PropsType): JSX.Element {
                 width: dropPlaceData.width,
             });
 
-            if (isInDropPlace) {
+            console.log('activeBlockId', activeBlockId);
+
+            if (isInDropPlace && activeBlockId === 'two') {
                 onGameEnd(Math.random());
+                return;
             }
+
+            setActiveBlockId('');
         },
-        [dropPlaceData, onGameEnd]
+        [dropPlaceData, onGameEnd, activeBlockId]
     );
 
     const singleTouchArgument = useMemo(() => {

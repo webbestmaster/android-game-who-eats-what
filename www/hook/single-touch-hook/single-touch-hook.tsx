@@ -56,7 +56,7 @@ export function useSingleTouch(data: UseSingleTouchArgumentsType): SingleTouchTy
     useEffect(() => {
         const body = getBody();
 
-        console.log('useSingleTouch - add listeners');
+        // console.log('useSingleTouch - add listeners');
 
         body.addEventListener('touchstart', onPointStart, false);
         body.addEventListener('touchmove', onPointMove, false);
@@ -64,7 +64,7 @@ export function useSingleTouch(data: UseSingleTouchArgumentsType): SingleTouchTy
         body.addEventListener('touchcancel', onPointEnd, false);
 
         return () => {
-            console.log('useSingleTouch - remove listeners');
+            // console.log('useSingleTouch - remove listeners');
 
             body.removeEventListener('touchstart', onPointStart, false);
             body.removeEventListener('touchmove', onPointMove, false);
