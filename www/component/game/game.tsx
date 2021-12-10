@@ -1,4 +1,4 @@
-import {useCallback, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {useScreenSize} from 'react-system-hook';
 
 import {useSingleTouch} from '../../hook/single-touch-hook/single-touch-hook';
@@ -16,7 +16,9 @@ export function Game(): JSX.Element {
     const minScreenSize = Math.min(width, height);
     const dishSize = Math.round(minScreenSize / 3.5);
     const halfDishSize = Math.round(dishSize / 2);
-    const dropPlaceData = getDropPlaceData({dishSize, screen: {height, width}});
+    const dropPlaceData = useMemo(() => {
+        return getDropPlaceData({dishSize, screen: {height, width}});
+    }, [dishSize, height, width]);
     const [flowState, setFlowState] = useState<GameFlowEnum>(GameFlowEnum.changeTask);
 
     const blockList: Array<InteractiveBlockStateType> = [{blockId: 'one'}, {blockId: 'two'}, {blockId: 'three'}];
@@ -37,7 +39,11 @@ export function Game(): JSX.Element {
         [dropPlaceData]
     );
 
-    const {coordinates, isPressed} = useSingleTouch({onTouchEnd});
+    const singleTouchArgument = useMemo(() => {
+        return {onTouchEnd};
+    }, [onTouchEnd]);
+
+    const {coordinates, isPressed} = useSingleTouch(singleTouchArgument);
 
     return (
         <div className={gameStyle.game}>
