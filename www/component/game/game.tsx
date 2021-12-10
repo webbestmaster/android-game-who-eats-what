@@ -7,11 +7,19 @@ import {SingleTouchCoordinatesType} from '../../hook/single-touch-hook/single-to
 import gameStyle from './game.scss';
 import {InteractiveBlockStateType} from './active-block/active-block-type';
 import {getDefaultCoordinates, getDropPlaceData, getIsInPlace} from './game-helper';
-import {bearAnimalData} from './task/animal/bear/bear';
-import {meatFoodData} from './task/food/meat/meat';
-import {GameFlowEnum} from './game-type';
+import {meatFood} from './task/food/meat/meat';
+import {GameFlowEnum, OnGameEndType} from './game-type';
+import {TaskType} from './task/task-type';
+import {getAnimalById} from './task/animal/animal';
 
-export function Game(): JSX.Element {
+type PropsType = {
+    onGameEnd: OnGameEndType;
+    task: TaskType;
+};
+
+export function Game(props: PropsType): JSX.Element {
+    const {task, onGameEnd} = props;
+    const animal = getAnimalById(task.animalId);
     const {width, height} = useScreenSize();
     const minScreenSize = Math.min(width, height);
     const dishSize = Math.round(minScreenSize / 3.5);
@@ -34,9 +42,11 @@ export function Game(): JSX.Element {
                 width: dropPlaceData.width,
             });
 
-            console.log('onTouchEnd', isInDropPlace);
+            if (isInDropPlace) {
+                onGameEnd(Math.random());
+            }
         },
-        [dropPlaceData]
+        [dropPlaceData, onGameEnd]
     );
 
     const singleTouchArgument = useMemo(() => {
@@ -73,7 +83,7 @@ export function Game(): JSX.Element {
                     }}
                     style={{
                         ...dropPlaceData,
-                        backgroundImage: `url(${bearAnimalData.imageSrc})`,
+                        backgroundImage: `url(${animal.imageSrc})`,
                     }}
                     type="button"
                 />
@@ -105,7 +115,7 @@ export function Game(): JSX.Element {
                     >
                         <div
                             className={gameStyle.action_block__image}
-                            style={{backgroundImage: `url(${meatFoodData.imageSrc})`}}
+                            style={{backgroundImage: `url(${meatFood.imageSrc})`}}
                         />
                     </div>
                 );

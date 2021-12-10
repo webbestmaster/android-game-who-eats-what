@@ -1,4 +1,5 @@
 import {isObjectInclude} from './object';
+import {getRandomNumber} from './number';
 
 export function arrayMove<ItemType>(list: Array<ItemType>, fromIndex: number, toIndex: number): Array<ItemType> {
     const item = list[fromIndex];
@@ -68,4 +69,8 @@ export function getPreviousArrayLoopIndex(array: Array<unknown>, currentIndex: n
     const decreasedIndex = currentIndex - 1;
 
     return decreasedIndex < 0 ? length - 1 : decreasedIndex;
+}
+
+export function getRandomItem<ItemType>(list: Array<ItemType>): ItemType {
+    return list[getRandomNumber(0, list.length)];
 }

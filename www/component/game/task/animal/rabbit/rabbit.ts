@@ -1,8 +1,8 @@
-import {AnimalDataType} from '../animal-type';
+import {AnimalType} from '../animal-type';
 
 import rabbitSrc from './rabbit.svg';
 
-export const rabbitAnimalData: AnimalDataType = {
+export const rabbitAnimal: AnimalType = {
     id: 'rabbit',
     imageSrc: rabbitSrc,
 };

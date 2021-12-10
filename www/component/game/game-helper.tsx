@@ -1,7 +1,7 @@
 import {SingleTouchCoordinatesType} from '../../hook/single-touch-hook/single-touch-type';
 import {PlaceType, SizeType} from '../../util/type';
 
-type DropPlaceDataType = {
+type DropPlaceType = {
     height: number;
     left: number;
     top: number;
@@ -13,7 +13,7 @@ type GetDropPlaceDataArgumentType = {
     screen: SizeType;
 };
 
-export function getDropPlaceData(data: GetDropPlaceDataArgumentType): DropPlaceDataType {
+export function getDropPlaceData(data: GetDropPlaceDataArgumentType): DropPlaceType {
     const {dishSize, screen} = data;
     const {width: screenWidth, height: screenHeight} = screen;
 

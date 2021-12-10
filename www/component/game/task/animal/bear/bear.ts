@@ -1,8 +1,8 @@
-import {AnimalDataType} from '../animal-type';
+import {AnimalType} from '../animal-type';
 
 import bearSrc from './bear.svg';
 
-export const bearAnimalData: AnimalDataType = {
+export const bearAnimal: AnimalType = {
     id: 'bear',
     imageSrc: bearSrc,
 };

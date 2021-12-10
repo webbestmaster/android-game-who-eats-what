@@ -1,4 +1,4 @@
-export type FoodDataType = {
+export type FoodType = {
     id: string;
     imageSrc: string;
 };
