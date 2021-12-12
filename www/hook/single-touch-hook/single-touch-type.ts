@@ -5,11 +5,12 @@ export type SingleTouchCoordinatesType = {
 
 export type SingleTouchType = {
     coordinates: SingleTouchCoordinatesType;
-    deltaCoordinates: SingleTouchCoordinatesType;
+    // deltaCoordinates: SingleTouchCoordinatesType;
     isPressed: boolean;
     startCoordinates: SingleTouchCoordinatesType;
 };
 
 export type UseSingleTouchArgumentsType = {
-    onTouchEnd?: (coordinates: SingleTouchCoordinatesType) => void;
+    id: string;
+    onTouchEnd: (coordinates: SingleTouchCoordinatesType) => void;
 };

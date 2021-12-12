@@ -55,7 +55,7 @@ export function Game(props: PropsType): JSX.Element {
     );
 
     const singleTouchArgument = useMemo(() => {
-        return {onTouchEnd};
+        return {id: 'game', onTouchEnd};
     }, [onTouchEnd]);
 
     const {coordinates, isPressed} = useSingleTouch(singleTouchArgument);

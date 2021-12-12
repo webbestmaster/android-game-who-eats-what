@@ -3,18 +3,14 @@
 import {SingleTouchCoordinatesType} from './single-touch-type';
 import {defaultSingleTouchCoordinates} from './single-touch-const';
 
-export function getBody(): HTMLElement {
+export function getBody(): HTMLElement | null {
     if (typeof document === 'undefined') {
-        throw new TypeError('[getBody]: document is undefined');
+        return null;
     }
 
     const {body} = document;
 
-    if (typeof body === 'undefined') {
-        throw new TypeError('[getBody]: body is undefined');
-    }
-
-    return body;
+    return typeof body === 'undefined' ? null : body;
 }
 
 export function getCoordinatesFromTouch(event: TouchEvent): SingleTouchCoordinatesType {

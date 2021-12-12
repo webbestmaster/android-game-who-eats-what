@@ -1,21 +1,45 @@
 /* global TouchEvent */
 
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {noop} from '../../util/function';
 
 import {SingleTouchCoordinatesType, SingleTouchType, UseSingleTouchArgumentsType} from './single-touch-type';
 import {getBody, getCoordinatesFromTouch, getIsPressed} from './single-touch-helper';
 import {defaultSingleTouchCoordinates} from './single-touch-const';
+import {addListeners, PointListenerMapType, removeListeners} from './single-touch-initialize';
 
 export function useSingleTouch(data: UseSingleTouchArgumentsType): SingleTouchType {
-    const {onTouchEnd = noop} = data;
+    const {onTouchEnd, id} = data;
     const [coordinates, setCoordinates] = useState<SingleTouchCoordinatesType>(defaultSingleTouchCoordinates);
     const [startCoordinates, setStartCoordinates] = useState<SingleTouchCoordinatesType>(defaultSingleTouchCoordinates);
-    const [deltaCoordinates, setDeltaCoordinates] = useState<SingleTouchCoordinatesType>(defaultSingleTouchCoordinates);
+    // const [deltaCoordinates, setDeltaCoordinates] = useState<SingleTouchCoordinatesType>(defaultSingleTouchCoordinates);
     const [isPressed, setIsPressed] = useState<boolean>(false);
+    // const id = String(Date.now());
 
-    const onPointStart = useCallback((event: TouchEvent) => {
+    const pointListenerMap: PointListenerMapType = useMemo(() => {
+        return {
+            id,
+            onChangePressed: setIsPressed,
+            onPointEnd: onTouchEnd,
+            onPointMove: setCoordinates,
+            onPointStart: setStartCoordinates,
+        };
+    }, [id, onTouchEnd]);
+
+    useEffect(() => {
+        console.log('useSingleTouch - add listeners');
+
+        addListeners(pointListenerMap);
+
+        return () => {
+            console.log('useSingleTouch - remove listeners');
+
+            removeListeners(id);
+        };
+    }, [id, pointListenerMap]);
+
+    /* const onPointStart = useCallback((event: TouchEvent) => {
         const singleTouchCoordinates = getCoordinatesFromTouch(event);
 
         setCoordinates(singleTouchCoordinates);
@@ -52,30 +76,32 @@ export function useSingleTouch(data: UseSingleTouchArgumentsType): SingleTouchTy
         },
         [coordinates, onTouchEnd]
     );
+*/
+    /*
+        useEffect(() => {
+            const body = getBody();
 
-    useEffect(() => {
-        const body = getBody();
+            console.log('useSingleTouch - add listeners');
 
-        // console.log('useSingleTouch - add listeners');
+            body.addEventListener('touchstart', onPointStart, false);
+            body.addEventListener('touchmove', onPointMove, false);
+            body.addEventListener('touchend', onPointEnd, false);
+            body.addEventListener('touchcancel', onPointEnd, false);
 
-        body.addEventListener('touchstart', onPointStart, false);
-        body.addEventListener('touchmove', onPointMove, false);
-        body.addEventListener('touchend', onPointEnd, false);
-        body.addEventListener('touchcancel', onPointEnd, false);
+            return () => {
+                console.log('useSingleTouch - remove listeners');
 
-        return () => {
-            // console.log('useSingleTouch - remove listeners');
-
-            body.removeEventListener('touchstart', onPointStart, false);
-            body.removeEventListener('touchmove', onPointMove, false);
-            body.removeEventListener('touchend', onPointEnd, false);
-            body.removeEventListener('touchcancel', onPointEnd, false);
-        };
-    }, [onPointEnd, onPointMove, onPointStart]);
+                body.removeEventListener('touchstart', onPointStart, false);
+                body.removeEventListener('touchmove', onPointMove, false);
+                body.removeEventListener('touchend', onPointEnd, false);
+                body.removeEventListener('touchcancel', onPointEnd, false);
+            };
+        }, [onPointEnd, onPointMove, onPointStart]);
+    */
 
     return {
         coordinates,
-        deltaCoordinates,
+        // deltaCoordinates,
         isPressed,
         startCoordinates,
     };
