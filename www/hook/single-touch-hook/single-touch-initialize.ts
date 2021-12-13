@@ -65,8 +65,8 @@ function onPointStart(event: TouchEvent) {
     startCoordinates.pageY = singleTouchCoordinates.pageY;
 
     pointListenerMapList.forEach((listenerMap: PointListenerMapType) => {
-        listenerMap.onPointStart(startCoordinates);
-        listenerMap.onPointMove(startCoordinates);
+        listenerMap.onPointStart({...startCoordinates});
+        listenerMap.onPointMove({...startCoordinates});
     });
 }
 
@@ -77,7 +77,7 @@ function onPointMove(event: TouchEvent) {
     moveCoordinates.pageY = singleTouchCoordinates.pageY;
 
     pointListenerMapList.forEach((listenerMap: PointListenerMapType) => {
-        listenerMap.onPointMove(moveCoordinates);
+        listenerMap.onPointMove({...moveCoordinates});
     });
 }
 
@@ -90,7 +90,7 @@ function onPointEnd(event: TouchEvent) {
 
     pointListenerMapList.forEach((listenerMap: PointListenerMapType) => {
         listenerMap.onChangePressed(false);
-        listenerMap.onPointEnd(moveCoordinates);
+        listenerMap.onPointEnd({...moveCoordinates});
     });
 }
 
@@ -125,5 +125,3 @@ export function singleTouchInitialize(): boolean {
         body.removeEventListener('touchcancel', onPointEnd, false);
     */
 }
-
-singleTouchInitialize();

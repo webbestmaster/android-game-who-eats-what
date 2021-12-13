@@ -1,11 +1,6 @@
-/* global TouchEvent */
-
-import {useCallback, useEffect, useMemo, useState} from 'react';
-
-import {noop} from '../../util/function';
+import {useEffect, useMemo, useState} from 'react';
 
 import {SingleTouchCoordinatesType, SingleTouchType, UseSingleTouchArgumentsType} from './single-touch-type';
-import {getBody, getCoordinatesFromTouch, getIsPressed} from './single-touch-helper';
 import {defaultSingleTouchCoordinates} from './single-touch-const';
 import {addListeners, PointListenerMapType, removeListeners} from './single-touch-initialize';
 
