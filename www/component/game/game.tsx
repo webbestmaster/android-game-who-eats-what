@@ -8,7 +8,7 @@ import gameStyle from './game.scss';
 import {InteractiveBlockStateType} from './active-block/active-block-type';
 import {getDefaultCoordinates, getDropPlaceData, getIsInPlace} from './game-helper';
 import {meatFood} from './task/food/meat/meat';
-import {GameFlowEnum, OnGameEndType} from './game-type';
+import {OnGameEndType} from './game-type';
 import {TaskType} from './task/task-type';
 import {getAnimalById} from './task/animal/animal';
 
@@ -27,7 +27,7 @@ export function Game(props: PropsType): JSX.Element {
     const dropPlaceData = useMemo(() => {
         return getDropPlaceData({dishSize, screen: {height, width}});
     }, [dishSize, height, width]);
-    const [flowState, setFlowState] = useState<GameFlowEnum>(GameFlowEnum.changeTask);
+    const [attemptCount, setAttemptCount] = useState<number>(0);
 
     const blockList: Array<InteractiveBlockStateType> = [{blockId: 'one'}, {blockId: 'two'}, {blockId: 'three'}];
 
@@ -44,14 +44,21 @@ export function Game(props: PropsType): JSX.Element {
 
             console.log('activeBlockId', activeBlockId);
 
-            if (isInDropPlace && activeBlockId === 'two') {
-                onGameEnd(Math.random());
+            if (isInDropPlace) {
+                const newAttemptCount = attemptCount + 1;
+
+                setAttemptCount(newAttemptCount);
+
+                if (activeBlockId === 'two') {
+                    onGameEnd({attemptCount: newAttemptCount});
+                    return;
+                }
                 return;
             }
 
             setActiveBlockId('');
         },
-        [dropPlaceData, onGameEnd, activeBlockId]
+        [dropPlaceData, onGameEnd, activeBlockId, attemptCount]
     );
 
     const singleTouchArgument = useMemo(() => {

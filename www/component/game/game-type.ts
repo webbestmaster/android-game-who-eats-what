@@ -1,3 +1,4 @@
+/*
 export enum GameFlowEnum {
     changeTask = 'change-task',
     endGame = 'end-game',
@@ -11,7 +12,10 @@ export enum GameMedalEnum {
     gold = 'gold',
     silver = 'silver',
 }
+*/
 
-export type OnGameEndResultType = number;
+export type GameEndResultType = {
+    attemptCount: number;
+};
 
-export type OnGameEndType = (result: OnGameEndResultType) => void;
+export type OnGameEndType = (result: GameEndResultType) => void;
