@@ -7,8 +7,8 @@ import {sfxAudioList} from '../../audio/sfx/sfx';
 import {TaskType} from '../../component/game/task/task-type';
 import {taskList} from '../../component/game/task/taks';
 import {getRandomItem} from '../../util/array';
-
 import {OnGameEndResultType, OnGameEndType} from '../../component/game/game-type';
+import {Popup} from '../../layout/popup/popup';
 
 import homeStyle from './home.scss';
 
@@ -22,6 +22,7 @@ export function Home(): JSX.Element {
         trackList: sfxAudioList,
     });
 
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const [task, setTask] = useState<TaskType>(getRandomItem<TaskType>(taskList));
     const onGameEnd: OnGameEndType = useCallback(
         (result: OnGameEndResultType) => {
@@ -38,9 +39,47 @@ export function Home(): JSX.Element {
         [task]
     );
 
+    setTimeout(() => {
+        setIsOpen(true);
+    }, 4e3);
+
+    setTimeout(() => {
+        setIsOpen(false);
+    }, 14e3);
+
+    /*
+
+    function onPopupShow() {
+        console.log('onPopupShow');
+    }
+
+    function onPopupHide() {
+        console.log('onPopupHide');
+    }
+*/
+
     return (
         <div className={homeStyle.home}>
             <Game key={task.id} onGameEnd={onGameEnd} task={task} />
+            <Popup
+                hasCloseButton
+                isOpen={isOpen}
+                onTransitionEnd={(isPopupTransitionOpen: boolean) => {
+                    // eslint-disable-next-line sonarjs/no-all-duplicated-branches
+                    setIsOpen(isPopupTransitionOpen);
+                    if (isPopupTransitionOpen) {
+                        // onPopupShow();
+                    } else {
+                        // onPopupHide();
+                    }
+                }}
+            >
+                <h1>471908374fsfkjhef</h1>
+                <h1>471908374fsfkjhef</h1>
+                <h1>471908374fsfkjhef</h1>
+                <h1>471908374fsfkjhef</h1>
+                <h1>471908374fsfkjhef</h1>
+            </Popup>
         </div>
     );
 }
