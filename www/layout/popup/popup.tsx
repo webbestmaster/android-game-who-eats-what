@@ -1,6 +1,6 @@
-/* global document */
-
 import {createPortal} from 'react-dom';
+
+import {getBody} from '../../hook/single-touch-hook/single-touch-helper';
 
 import popupStyle from './popup.scss';
 
@@ -13,18 +13,9 @@ type PropsType = {
 
 export function Popup(props: PropsType): JSX.Element | null {
     const {isOpen, children, hasCloseButton, closePopup} = props;
+    const body = getBody();
 
-    if (!isOpen) {
-        return null;
-    }
-
-    if (typeof document === 'undefined') {
-        return null;
-    }
-
-    const {body} = document;
-
-    if (!body) {
+    if (!isOpen || !body) {
         return null;
     }
 

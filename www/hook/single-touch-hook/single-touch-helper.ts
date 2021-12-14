@@ -10,7 +10,7 @@ export function getBody(): HTMLElement | null {
 
     const {body} = document;
 
-    return typeof body === 'undefined' ? null : body;
+    return body || null;
 }
 
 export function getCoordinatesFromTouch(event: TouchEvent): SingleTouchCoordinatesType {
