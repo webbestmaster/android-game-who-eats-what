@@ -39,46 +39,17 @@ export function Home(): JSX.Element {
         [task]
     );
 
-    setTimeout(() => {
-        setIsOpen(true);
-    }, 4e3);
-
-    setTimeout(() => {
-        setIsOpen(false);
-    }, 14e3);
-
-    /*
-
-    function onPopupShow() {
-        console.log('onPopupShow');
-    }
-
-    function onPopupHide() {
-        console.log('onPopupHide');
-    }
-*/
-
     return (
         <div className={homeStyle.home}>
             <Game key={task.id} onGameEnd={onGameEnd} task={task} />
-            <Popup
-                hasCloseButton
-                isOpen={isOpen}
-                onTransitionEnd={(isPopupTransitionOpen: boolean) => {
-                    // eslint-disable-next-line sonarjs/no-all-duplicated-branches
-                    setIsOpen(isPopupTransitionOpen);
-                    if (isPopupTransitionOpen) {
-                        // onPopupShow();
-                    } else {
-                        // onPopupHide();
-                    }
-                }}
-            >
-                <h1>471908374fsfkjhef</h1>
-                <h1>471908374fsfkjhef</h1>
-                <h1>471908374fsfkjhef</h1>
-                <h1>471908374fsfkjhef</h1>
-                <h1>471908374fsfkjhef</h1>
+            <Popup closePopup={() => setIsOpen(false)} hasCloseButton isOpen={isOpen}>
+                <>
+                    <h1>471908374fsfkjhef</h1>
+                    <h1>471908374fsfkjhef</h1>
+                    <h1>471908374fsfkjhef</h1>
+                    <h1>471908374fsfkjhef</h1>
+                    <h1>471908374fsfkjhef</h1>
+                </>
             </Popup>
         </div>
     );
