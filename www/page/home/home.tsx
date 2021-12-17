@@ -8,6 +8,8 @@ import {taskList} from '../../component/game/task/taks';
 import {getRandomItem} from '../../util/array';
 import {GameEndResultType, OnGameEndType} from '../../component/game/game-type';
 import {Popup} from '../../layout/popup/popup';
+import {EndGame} from '../../component/end-game/end-game';
+import {MedalList} from '../../component/medal-list/medal-list';
 
 import homeStyle from './home.scss';
 
@@ -21,9 +23,16 @@ export function Home(): JSX.Element {
         trackList: sfxAudioList,
     });
 
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const maxGameCount = 3;
+    const [isEndGamePopupOpen, setIsEndGamePopupOpen] = useState<boolean>(false);
     const [gameResultList, setGameResultList] = useState<Array<GameEndResultType>>([]);
     const [task, setTask] = useState<TaskType>(getRandomItem<TaskType>(taskList));
+
+    const resetView = useCallback(() => {
+        setIsEndGamePopupOpen(false);
+        setGameResultList([]);
+        setTask(getRandomItem<TaskType>(taskList));
+    }, []);
 
     const onGameEnd: OnGameEndType = useCallback(
         (gameResult: GameEndResultType) => {
@@ -34,7 +43,18 @@ export function Home(): JSX.Element {
                 newTask = getRandomItem<TaskType>(taskList);
             }
 
-            setGameResultList([...gameResultList, gameResult]);
+            const newGameResultList = [...gameResultList, gameResult];
+
+            setGameResultList(newGameResultList);
+
+            const isFullGameEnd = newGameResultList.length >= maxGameCount;
+
+            if (isFullGameEnd) {
+                setIsEndGamePopupOpen(true);
+                console.log('all games is end');
+                return;
+            }
+
             setTask(newTask);
 
             console.log('game is end');
@@ -45,12 +65,9 @@ export function Home(): JSX.Element {
     return (
         <div className={homeStyle.home}>
             <Game key={gameResultList.length} onGameEnd={onGameEnd} task={task} />
-            <Popup closePopup={() => setIsOpen(false)} hasCloseButton isOpen={isOpen}>
-                <h1>471908374fsfkjhef</h1>
-                <h1>471908374fsfkjhef</h1>
-                <h1>471908374fsfkjhef</h1>
-                <h1>471908374fsfkjhef</h1>
-                <h1>471908374fsfkjhef</h1>
+            <MedalList gameResultList={gameResultList} />
+            <Popup closePopup={() => resetView()} hasCloseButton isOpen={isEndGamePopupOpen}>
+                {isEndGamePopupOpen ? <EndGame gameResultList={gameResultList} handleNewGame={resetView} /> : null}
             </Popup>
         </div>
     );

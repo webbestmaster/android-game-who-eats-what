@@ -1,0 +1,35 @@
+/* stylelint-disable selector-combinator-disallowed-list */
+
+.medal_item {
+    box-sizing: border-box;
+    display: block;
+    float: left;
+    margin: 3px;
+    padding: 0;
+}
+
+.medal_item__image {
+    border-radius: 100%;
+    box-shadow: 2px 2px 2px rgb(0 0 0 / 50%);
+    display: block;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    width: 100%;
+}
+
+@media (orientation: portrait) {
+    .medal_item {
+        &:nth-child(5n + 1) {
+            clear: both;
+        }
+    }
+}
+
+@media (orientation: landscape) {
+    .medal_item {
+        &:nth-child(2n + 1) {
+            clear: both;
+        }
+    }
+}
