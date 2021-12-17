@@ -1,8 +1,8 @@
 import {AnimalType} from '../animal-type';
 
-import hedgehogSrc from './hedgehog.svg';
+import hedgehogImage1 from './image/hedgehog-1.svg';
 
 export const hedgehogAnimal: AnimalType = {
     id: 'hedgehog',
-    imageSrc: hedgehogSrc,
+    imageList: [hedgehogImage1],
 };

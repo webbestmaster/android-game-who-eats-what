@@ -4,6 +4,8 @@ import {useScreenSize} from 'react-system-hook';
 import {useSingleTouch} from '../../hook/single-touch-hook/single-touch-hook';
 import {SingleTouchCoordinatesType} from '../../hook/single-touch-hook/single-touch-type';
 
+import {getRandomItem} from '../../util/array';
+
 import gameStyle from './game.scss';
 import {InteractiveBlockStateType} from './active-block/active-block-type';
 import {getDefaultCoordinates, getDropPlaceData, getIsInPlace} from './game-helper';
@@ -95,7 +97,7 @@ export function Game(props: PropsType): JSX.Element {
                     }}
                     style={{
                         ...dropPlaceData,
-                        backgroundImage: `url(${animal.imageSrc})`,
+                        backgroundImage: `url(${getRandomItem<string>(animal.imageList)})`,
                     }}
                     type="button"
                 />

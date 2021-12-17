@@ -1,4 +1,4 @@
 export type AnimalType = {
     id: string;
-    imageSrc: string;
+    imageList: Array<string>;
 };

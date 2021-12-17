@@ -1,8 +1,8 @@
 import {AnimalType} from '../animal-type';
 
-import snakeSrc from './snake.svg';
+import snakeImage1 from './image/snake-1.svg';
 
 export const snakeAnimal: AnimalType = {
     id: 'snake',
-    imageSrc: snakeSrc,
+    imageList: [snakeImage1],
 };

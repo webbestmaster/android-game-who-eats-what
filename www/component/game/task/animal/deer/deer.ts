@@ -1,8 +1,8 @@
 import {AnimalType} from '../animal-type';
 
-import deerSrc from './deer.svg';
+import deerImage1 from './image/deer-1.svg';
 
 export const deerAnimal: AnimalType = {
     id: 'deer',
-    imageSrc: deerSrc,
+    imageList: [deerImage1],
 };
