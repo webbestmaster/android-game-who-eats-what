@@ -24,7 +24,7 @@
 }
 
 .action_block {
-    align-content: center;
+    align-items: center;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -34,10 +34,10 @@
 }
 
 .action_block__image {
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
     display: block;
+    height: 75%;
+    object-fit: contain;
+    object-position: center;
     width: 75%;
 }
 
@@ -49,16 +49,24 @@
     animation-name: up-down;
     animation-timing-function: ease-in-out;
     background-color: transparent;
-    background-position: center center;
+    //background-position: center center;
     //background-color: #0c0;
-    background-repeat: no-repeat;
-    background-size: contain;
+    //background-repeat: no-repeat;
+    //background-size: contain;
     border: 0;
     margin: 0;
     outline: none;
     padding: 0;
     position: absolute;
     z-index: 1;
+}
+
+.drop_place_image {
+    display: block;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    width: 100%;
 }
 
 .event_hunter {

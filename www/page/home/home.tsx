@@ -64,7 +64,7 @@ export function Home(): JSX.Element {
 
     return (
         <div className={homeStyle.home}>
-            <Game key={gameResultList.length} onGameEnd={onGameEnd} task={task} />
+            <Game key={JSON.stringify(task)} onGameEnd={onGameEnd} task={task} />
             <MedalList gameResultList={gameResultList} />
             <Popup closePopup={() => resetView()} hasCloseButton isOpen={isEndGamePopupOpen}>
                 {isEndGamePopupOpen ? <EndGame gameResultList={gameResultList} handleNewGame={resetView} /> : null}

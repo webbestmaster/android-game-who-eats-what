@@ -22,6 +22,7 @@ type PropsType = {
 export function Game(props: PropsType): JSX.Element {
     const {task, onGameEnd} = props;
     const animal = getAnimalById(task.animalId);
+    const [animalImage] = useState<string>(getRandomItem<string>(animal.imageList));
     const {width, height} = useScreenSize();
     const minScreenSize = Math.min(width, height);
     const dishSize = Math.round(minScreenSize / 3.5);
@@ -46,16 +47,14 @@ export function Game(props: PropsType): JSX.Element {
 
             console.log('activeBlockId', activeBlockId);
 
-            if (isInDropPlace) {
+            if (isInDropPlace && activeBlockId) {
                 const newAttemptCount = attemptCount + 1;
 
                 setAttemptCount(newAttemptCount);
 
                 if (activeBlockId === 'two') {
                     onGameEnd({attemptCount: newAttemptCount});
-                    return;
                 }
-                return;
             }
 
             setActiveBlockId('');
@@ -95,12 +94,11 @@ export function Game(props: PropsType): JSX.Element {
                     onClick={() => {
                         console.log('///// play audio');
                     }}
-                    style={{
-                        ...dropPlaceData,
-                        backgroundImage: `url(${getRandomItem<string>(animal.imageList)})`,
-                    }}
+                    style={dropPlaceData}
                     type="button"
-                />
+                >
+                    <img alt={animal.id} className={gameStyle.drop_place_image} src={animalImage} />
+                </button>
             </div>
 
             {blockList.map((block: InteractiveBlockStateType, index: number): JSX.Element => {
@@ -127,10 +125,7 @@ export function Game(props: PropsType): JSX.Element {
                             zIndex: isActiveBlock ? 3 : 2,
                         }}
                     >
-                        <div
-                            className={gameStyle.action_block__image}
-                            style={{backgroundImage: `url(${meatFood.imageSrc})`}}
-                        />
+                        <img alt={meatFood.id} className={gameStyle.action_block__image} src={meatFood.imageSrc} />
                     </div>
                 );
             })}
