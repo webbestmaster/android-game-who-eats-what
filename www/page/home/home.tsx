@@ -31,18 +31,19 @@ export function Home(): JSX.Element {
     const resetView = useCallback(() => {
         setIsEndGamePopupOpen(false);
         setGameResultList([]);
-        setTask(getRandomItem<TaskType>(taskList));
-    }, []);
+
+        let newTask: TaskType = getRandomItem<TaskType>(taskList);
+
+        // eslint-disable-next-line no-loops/no-loops
+        while (newTask === task) {
+            newTask = getRandomItem<TaskType>(taskList);
+        }
+
+        setTask(newTask);
+    }, [task]);
 
     const onGameEnd: OnGameEndType = useCallback(
         (gameResult: GameEndResultType) => {
-            let newTask: TaskType = getRandomItem<TaskType>(taskList);
-
-            // eslint-disable-next-line no-loops/no-loops
-            while (newTask === task) {
-                newTask = getRandomItem<TaskType>(taskList);
-            }
-
             const newGameResultList = [...gameResultList, gameResult];
 
             setGameResultList(newGameResultList);
@@ -53,6 +54,13 @@ export function Home(): JSX.Element {
                 setIsEndGamePopupOpen(true);
                 console.log('all games is end');
                 return;
+            }
+
+            let newTask: TaskType = getRandomItem<TaskType>(taskList);
+
+            // eslint-disable-next-line no-loops/no-loops
+            while (newTask === task) {
+                newTask = getRandomItem<TaskType>(taskList);
             }
 
             setTask(newTask);
@@ -66,7 +74,7 @@ export function Home(): JSX.Element {
         <div className={homeStyle.home}>
             <Game key={JSON.stringify(task)} onGameEnd={onGameEnd} task={task} />
             <MedalList gameResultList={gameResultList} />
-            <Popup closePopup={() => resetView()} hasCloseButton isOpen={isEndGamePopupOpen}>
+            <Popup closePopup={resetView} hasCloseButton isOpen={isEndGamePopupOpen}>
                 {isEndGamePopupOpen ? <EndGame gameResultList={gameResultList} handleNewGame={resetView} /> : null}
             </Popup>
         </div>
