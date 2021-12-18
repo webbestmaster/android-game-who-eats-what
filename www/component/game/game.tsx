@@ -125,7 +125,11 @@ export function Game(props: PropsType): JSX.Element {
                             zIndex: isActiveBlock ? 3 : 2,
                         }}
                     >
-                        <img alt={meatFood.id} className={gameStyle.action_block__image} src={meatFood.imageList[0]} />
+                        <img
+                            alt={meatFood.id}
+                            className={gameStyle.action_block__image}
+                            src={getRandomItem<string>(meatFood.imageList)}
+                        />
                     </div>
                 );
             })}
