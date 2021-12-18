@@ -3,6 +3,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const {isProduction, isDevelopment, isTsTranspileOnly, fileRegExp, cwd} = require('./../../config');
 
+const autoprefixer = isDevelopment
+    ? {loader: 'postcss-loader'}
+    : {loader: 'postcss-loader', options: {postcssOptions: {plugins: ['autoprefixer']}}};
+
 const styleLoader = {
     loader: 'style-loader',
     options: {attributes: {class: 'my-css-module'}},
@@ -49,7 +53,7 @@ module.exports.rules = [
                     },
                 },
             },
-            {loader: 'postcss-loader', options: {postcssOptions: {plugins: ['autoprefixer']}}},
+            autoprefixer,
             {loader: 'sass-loader', options: {sourceMap: isDevelopment}},
         ],
     },
@@ -67,6 +71,7 @@ module.exports.rules = [
                     },
                 },
             },
+            autoprefixer,
         ],
     },
     {

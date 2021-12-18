@@ -3,8 +3,12 @@
         transform: translate3d(0, -4%, 0);
     }
 
-    100% {
+    50% {
         transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(0, -4%, 0);
     }
 }
 
@@ -42,17 +46,13 @@
 }
 
 .drop_place {
-    animation-direction: alternate-reverse;
+    animation-direction: normal;
     animation-duration: 3s;
-    animation-fill-mode: forwards;
+    animation-fill-mode: both;
     animation-iteration-count: infinite;
     animation-name: up-down;
     animation-timing-function: ease-in-out;
     background-color: transparent;
-    //background-position: center center;
-    //background-color: #0c0;
-    //background-repeat: no-repeat;
-    //background-size: contain;
     border: 0;
     margin: 0;
     outline: none;
