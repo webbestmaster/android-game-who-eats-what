@@ -1,4 +1,4 @@
-import {AnimalType} from './animal-type';
+import {AnimalEnum, AnimalType} from './animal-type';
 
 import {bearAnimal} from './bear/bear';
 import {deerAnimal} from './deer/deer';
@@ -24,7 +24,7 @@ export const animalList: Array<AnimalType> = [
     wolfAnimal,
 ];
 
-export function getAnimalById(id: string): AnimalType {
+export function getAnimalById(id: AnimalEnum): AnimalType {
     const animal: AnimalType | void = animalList.find((testAnimal: AnimalType): boolean => {
         return testAnimal.id === id;
     });

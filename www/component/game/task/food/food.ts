@@ -1,9 +1,9 @@
-import {FoodType} from './food-type';
+import {FoodEnum, FoodType} from './food-type';
 import {meatFood} from './meat/meat';
 
 export const foodList: Array<FoodType> = [meatFood];
 
-export function getFoodById(id: string): FoodType {
+export function getFoodById(id: FoodEnum): FoodType {
     const food: FoodType | void = foodList.find((testFood: FoodType): boolean => {
         return testFood.id === id;
     });

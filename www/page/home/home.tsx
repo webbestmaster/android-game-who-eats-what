@@ -3,8 +3,8 @@ import {useCallback, useState} from 'react';
 import {Game} from '../../component/game/game';
 import {useAudioPlayer} from '../../hook/audio-player-hook/audio-player-hook';
 import {sfxAudioList} from '../../audio/sfx/sfx';
-import {TaskType} from '../../component/game/task/task-type';
-import {taskList} from '../../component/game/task/taks';
+import {AnimalType} from '../../component/game/task/animal/animal-type';
+import {animalList} from '../../component/game/task/animal/animal';
 import {getRandomItem} from '../../util/array';
 import {GameEndResultType, OnGameEndType} from '../../component/game/game-type';
 import {Popup} from '../../layout/popup/popup';
@@ -26,21 +26,21 @@ export function Home(): JSX.Element {
     const maxGameCount = 3;
     const [isEndGamePopupOpen, setIsEndGamePopupOpen] = useState<boolean>(false);
     const [gameResultList, setGameResultList] = useState<Array<GameEndResultType>>([]);
-    const [task, setTask] = useState<TaskType>(getRandomItem<TaskType>(taskList));
+    const [animal, setAnimal] = useState<AnimalType>(getRandomItem<AnimalType>(animalList));
 
     const resetView = useCallback(() => {
         setIsEndGamePopupOpen(false);
         setGameResultList([]);
 
-        let newTask: TaskType = getRandomItem<TaskType>(taskList);
+        let newAnimal: AnimalType = getRandomItem<AnimalType>(animalList);
 
         // eslint-disable-next-line no-loops/no-loops
-        while (newTask === task) {
-            newTask = getRandomItem<TaskType>(taskList);
+        while (newAnimal === animal) {
+            newAnimal = getRandomItem<AnimalType>(animalList);
         }
 
-        setTask(newTask);
-    }, [task]);
+        setAnimal(newAnimal);
+    }, [animal]);
 
     const onGameEnd: OnGameEndType = useCallback(
         (gameResult: GameEndResultType) => {
@@ -56,23 +56,23 @@ export function Home(): JSX.Element {
                 return;
             }
 
-            let newTask: TaskType = getRandomItem<TaskType>(taskList);
+            let newAnimal: AnimalType = getRandomItem<AnimalType>(animalList);
 
             // eslint-disable-next-line no-loops/no-loops
-            while (newTask === task) {
-                newTask = getRandomItem<TaskType>(taskList);
+            while (newAnimal === animal) {
+                newAnimal = getRandomItem<AnimalType>(animalList);
             }
 
-            setTask(newTask);
+            setAnimal(newAnimal);
 
             console.log('game is end');
         },
-        [task, gameResultList]
+        [animal, gameResultList]
     );
 
     return (
         <div className={homeStyle.home}>
-            <Game key={JSON.stringify(task)} onGameEnd={onGameEnd} task={task} />
+            <Game animal={animal} key={JSON.stringify(animal)} onGameEnd={onGameEnd} />
             <MedalList gameResultList={gameResultList} />
             <Popup closePopup={resetView} hasCloseButton isOpen={isEndGamePopupOpen}>
                 {isEndGamePopupOpen ? <EndGame gameResultList={gameResultList} handleNewGame={resetView} /> : null}

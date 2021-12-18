@@ -1,8 +1,10 @@
-import {AnimalType} from '../animal-type';
+import {AnimalEnum, AnimalType} from '../animal-type';
+import {FoodEnum} from '../../food/food-type';
 
 import owlImage1 from './image/owl-1.svg';
 
 export const owlAnimal: AnimalType = {
-    id: 'owl',
+    foodIdList: [FoodEnum.meat],
+    id: AnimalEnum.owl,
     imageList: [owlImage1],
 };

@@ -3,7 +3,6 @@ import {useScreenSize} from 'react-system-hook';
 
 import {useSingleTouch} from '../../hook/single-touch-hook/single-touch-hook';
 import {SingleTouchCoordinatesType} from '../../hook/single-touch-hook/single-touch-type';
-
 import {getRandomItem} from '../../util/array';
 
 import gameStyle from './game.scss';
@@ -11,18 +10,19 @@ import {InteractiveBlockStateType} from './active-block/active-block-type';
 import {getDefaultCoordinates, getDropPlaceData, getIsInPlace} from './game-helper';
 import {meatFood} from './task/food/meat/meat';
 import {OnGameEndType} from './game-type';
-import {TaskType} from './task/task-type';
-import {getAnimalById} from './task/animal/animal';
+import {AnimalType} from './task/animal/animal-type';
+import {foodList} from './task/food/food';
+import {FoodType} from './task/food/food-type';
 
 type PropsType = {
+    animal: AnimalType;
     onGameEnd: OnGameEndType;
-    task: TaskType;
 };
 
 export function Game(props: PropsType): JSX.Element {
-    const {task, onGameEnd} = props;
-    const animal = getAnimalById(task.animalId);
+    const {onGameEnd, animal} = props;
     const [animalImage] = useState<string>(getRandomItem<string>(animal.imageList));
+    const [food] = useState<FoodType>(getRandomItem<FoodType>(foodList));
     const {width, height} = useScreenSize();
     const minScreenSize = Math.min(width, height);
     const dishSize = Math.round(minScreenSize / 3.5);
@@ -125,7 +125,7 @@ export function Game(props: PropsType): JSX.Element {
                             zIndex: isActiveBlock ? 3 : 2,
                         }}
                     >
-                        <img alt={meatFood.id} className={gameStyle.action_block__image} src={meatFood.imageSrc} />
+                        <img alt={meatFood.id} className={gameStyle.action_block__image} src={meatFood.imageList[0]} />
                     </div>
                 );
             })}

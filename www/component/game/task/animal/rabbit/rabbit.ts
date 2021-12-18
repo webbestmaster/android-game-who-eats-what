@@ -1,9 +1,11 @@
-import {AnimalType} from '../animal-type';
+import {AnimalEnum, AnimalType} from '../animal-type';
+import {FoodEnum} from '../../food/food-type';
 
 import rabbitImage1 from './image/rabbit-1.svg';
 import rabbitImage2 from './image/rabbit-2.svg';
 
 export const rabbitAnimal: AnimalType = {
-    id: 'rabbit',
+    foodIdList: [FoodEnum.meat],
+    id: AnimalEnum.rabbit,
     imageList: [rabbitImage1, rabbitImage2],
 };

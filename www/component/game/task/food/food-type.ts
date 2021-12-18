@@ -1,4 +1,8 @@
+export enum FoodEnum {
+    meat = 'meat',
+}
+
 export type FoodType = {
-    id: string;
-    imageSrc: string;
+    id: FoodEnum;
+    imageList: Array<string>;
 };
