@@ -28,10 +28,7 @@ export function Home(): JSX.Element {
     const [gameResultList, setGameResultList] = useState<Array<GameEndResultType>>([]);
     const [animal, setAnimal] = useState<AnimalType>(getRandomItem<AnimalType>(animalList));
 
-    const resetView = useCallback(() => {
-        setIsEndGamePopupOpen(false);
-        setGameResultList([]);
-
+    const setNewRandomAnimal = useCallback(() => {
         let newAnimal: AnimalType = getRandomItem<AnimalType>(animalList);
 
         // eslint-disable-next-line no-loops/no-loops
@@ -41,6 +38,12 @@ export function Home(): JSX.Element {
 
         setAnimal(newAnimal);
     }, [animal]);
+
+    const resetView = useCallback(() => {
+        setIsEndGamePopupOpen(false);
+        setGameResultList([]);
+        setNewRandomAnimal();
+    }, [setNewRandomAnimal]);
 
     const onGameEnd: OnGameEndType = useCallback(
         (gameResult: GameEndResultType) => {
@@ -56,18 +59,11 @@ export function Home(): JSX.Element {
                 return;
             }
 
-            let newAnimal: AnimalType = getRandomItem<AnimalType>(animalList);
-
-            // eslint-disable-next-line no-loops/no-loops
-            while (newAnimal === animal) {
-                newAnimal = getRandomItem<AnimalType>(animalList);
-            }
-
-            setAnimal(newAnimal);
+            setNewRandomAnimal();
 
             console.log('game is end');
         },
-        [animal, gameResultList]
+        [gameResultList, setNewRandomAnimal]
     );
 
     return (
