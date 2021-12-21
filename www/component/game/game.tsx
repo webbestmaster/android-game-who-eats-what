@@ -4,6 +4,7 @@ import {useScreenSize} from 'react-system-hook';
 import {useSingleTouch} from '../../hook/single-touch-hook/single-touch-hook';
 import {SingleTouchCoordinatesType} from '../../hook/single-touch-hook/single-touch-type';
 import {getRandomItem} from '../../util/array';
+import {classNames} from '../../util/css';
 
 import gameStyle from './game.scss';
 import {InteractiveBlockStateType} from './active-block/active-block-type';
@@ -22,6 +23,7 @@ type PropsType = {
 export function Game(props: PropsType): JSX.Element {
     const {onGameEnd, animal} = props;
     const [animalImage] = useState<string>(getRandomItem<string>(animal.imageList));
+    const [isSwiped] = useState<boolean>(Math.random() > 0.5);
     const [food] = useState<FoodType>(getRandomItem<FoodType>(foodList));
     const {width, height} = useScreenSize();
     const minScreenSize = Math.min(width, height);
@@ -31,6 +33,8 @@ export function Game(props: PropsType): JSX.Element {
         return getDropPlaceData({dishSize, screen: {height, width}});
     }, [dishSize, height, width]);
     const [attemptCount, setAttemptCount] = useState<number>(0);
+
+    console.log('-------------- /// game');
 
     const blockList: Array<InteractiveBlockStateType> = [{blockId: 'one'}, {blockId: 'two'}, {blockId: 'three'}];
 
@@ -97,7 +101,13 @@ export function Game(props: PropsType): JSX.Element {
                     style={dropPlaceData}
                     type="button"
                 >
-                    <img alt={animal.id} className={gameStyle.drop_place_image} src={animalImage} />
+                    <img
+                        alt={animal.id}
+                        className={classNames(gameStyle.drop_place_image, {
+                            [gameStyle.drop_place_image__swiped]: isSwiped,
+                        })}
+                        src={animalImage}
+                    />
                 </button>
             </div>
 
@@ -115,7 +125,9 @@ export function Game(props: PropsType): JSX.Element {
 
                 return (
                     <div
-                        className={gameStyle.action_block}
+                        className={classNames(gameStyle.action_block, {
+                            [gameStyle.action_block__active]: isActiveBlock,
+                        })}
                         key={'food-' + blockId}
                         onTouchStart={() => setActiveBlockId(blockId)}
                         style={{

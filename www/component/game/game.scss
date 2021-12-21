@@ -35,6 +35,10 @@
     left: 0;
     position: absolute;
     top: 0;
+
+    &.action_block__active {
+        filter: drop-shadow(1px 4px 2px #0007);
+    }
 }
 
 .action_block__image {
@@ -63,10 +67,15 @@
 
 .drop_place_image {
     display: block;
+    filter: drop-shadow(1px 4px 2px #0007);
     height: 100%;
     object-fit: contain;
     object-position: center center;
     width: 100%;
+
+    &.drop_place_image__swiped {
+        transform: scale(-1, 1);
+    }
 }
 
 .event_hunter {
