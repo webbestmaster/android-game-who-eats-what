@@ -1,3 +1,5 @@
+$game-element-shadow: drop-shadow(1px 4px 2px #0007);
+
 @keyframes up-down {
     0% {
         transform: translate3d(0, -4%, 0);
@@ -37,7 +39,7 @@
     top: 0;
 
     &.action_block__active {
-        filter: drop-shadow(1px 4px 2px #0007);
+        filter: $game-element-shadow;
     }
 }
 
@@ -67,7 +69,7 @@
 
 .drop_place_image {
     display: block;
-    filter: drop-shadow(1px 4px 2px #0007);
+    filter: $game-element-shadow;
     height: 100%;
     object-fit: contain;
     object-position: center center;
@@ -93,6 +95,7 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
+    filter: $game-element-shadow;
     position: absolute;
     transform: translate(-50%, -50%);
     z-index: 0;

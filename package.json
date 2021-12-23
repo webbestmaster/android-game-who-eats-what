@@ -47,9 +47,9 @@
     "_postinstall": "cp ./git-hooks/pre-commit ./.git/hooks"
   },
   "dependencies": {
-    "@types/react": "^17.0.37",
+    "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
-    "es5-shim": "^4.6.3",
+    "es5-shim": "^4.6.4",
     "es6-shim": "^0.35.6",
     "es7-object-polyfill": "^1.0.1",
     "react": "^17.0.2",
@@ -87,7 +87,7 @@
     "eslint-plugin-no-use-extend-native": "^0.5.0",
     "eslint-plugin-optimize-regex": "^1.2.1",
     "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-sonarjs": "^0.11.0",
     "eslint-plugin-typescript-sort-keys": "^2.1.0",
@@ -119,7 +119,7 @@
     "webpack": "^5.65.0",
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.7.0",
+    "webpack-dev-server": "^4.7.1",
     "webpack-node-externals": "^3.0.0"
   }
 }

@@ -9,7 +9,6 @@ import {classNames} from '../../util/css';
 import gameStyle from './game.scss';
 import {InteractiveBlockStateType} from './active-block/active-block-type';
 import {getDefaultCoordinates, getDropPlaceData, getIsInPlace} from './game-helper';
-import {meatFood} from './task/food/meat/meat';
 import {OnGameEndType} from './game-type';
 import {AnimalType} from './task/animal/animal-type';
 import {foodList} from './task/food/food';
@@ -25,6 +24,7 @@ export function Game(props: PropsType): JSX.Element {
     const [animalImage] = useState<string>(getRandomItem<string>(animal.imageList));
     const [isSwiped] = useState<boolean>(Math.random() > 0.5);
     const [food] = useState<FoodType>(getRandomItem<FoodType>(foodList));
+    const [foodImage] = useState<string>(getRandomItem<string>(food.imageList));
     const {width, height} = useScreenSize();
     const minScreenSize = Math.min(width, height);
     const dishSize = Math.round(minScreenSize / 3.5);
@@ -137,11 +137,7 @@ export function Game(props: PropsType): JSX.Element {
                             zIndex: isActiveBlock ? 3 : 2,
                         }}
                     >
-                        <img
-                            alt={meatFood.id}
-                            className={gameStyle.action_block__image}
-                            src={getRandomItem<string>(meatFood.imageList)}
-                        />
+                        <img alt={food.id} className={gameStyle.action_block__image} src={foodImage} />
                     </div>
                 );
             })}
