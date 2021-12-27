@@ -115,13 +115,4 @@ export function singleTouchInitialize(): boolean {
     isSingleTouchInitialized = true;
 
     return true;
-
-    /*
-        console.log('useSingleTouch - remove listeners');
-
-        body.removeEventListener('touchstart', onPointStart, false);
-        body.removeEventListener('touchmove', onPointMove, false);
-        body.removeEventListener('touchend', onPointEnd, false);
-        body.removeEventListener('touchcancel', onPointEnd, false);
-    */
 }

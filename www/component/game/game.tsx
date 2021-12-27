@@ -121,6 +121,8 @@ export function Game(props: PropsType): JSX.Element {
                 const translateX = transformCoordinates.pageX - halfDishSize;
                 const translateY = transformCoordinates.pageY - halfDishSize;
 
+                const blockZIndex = 2;
+                const blockZIndexActive = 3;
                 const transform = `translate3d(${translateX}px,${translateY}px,0px)`;
 
                 return (
@@ -134,7 +136,7 @@ export function Game(props: PropsType): JSX.Element {
                             height: dishSize,
                             transform,
                             width: dishSize,
-                            zIndex: isActiveBlock ? 3 : 2,
+                            zIndex: isActiveBlock ? blockZIndexActive : blockZIndex,
                         }}
                     >
                         <img alt={food.id} className={gameStyle.action_block__image} src={foodImage} />

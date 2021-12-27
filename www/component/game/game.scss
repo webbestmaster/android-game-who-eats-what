@@ -1,5 +1,8 @@
 $game-element-shadow: drop-shadow(1px 4px 2px #0007);
 
+$z-index-game: 1;
+$z-index-game-back-stage: 0;
+
 @keyframes up-down {
     0% {
         transform: translate3d(0, -4%, 0);
@@ -26,7 +29,7 @@ $game-element-shadow: drop-shadow(1px 4px 2px #0007);
     position: absolute;
     top: 0;
     width: 100%;
-    z-index: 1;
+    z-index: $z-index-game;
 }
 
 .action_block {
@@ -64,7 +67,7 @@ $game-element-shadow: drop-shadow(1px 4px 2px #0007);
     outline: none;
     padding: 0;
     position: absolute;
-    z-index: 1;
+    z-index: $z-index-game;
 }
 
 .drop_place_image {
@@ -87,7 +90,7 @@ $game-element-shadow: drop-shadow(1px 4px 2px #0007);
     position: absolute;
     top: 0;
     width: 100%;
-    z-index: 1;
+    z-index: $z-index-game;
 }
 
 .plate {
@@ -98,5 +101,5 @@ $game-element-shadow: drop-shadow(1px 4px 2px #0007);
     filter: $game-element-shadow;
     position: absolute;
     transform: translate(-50%, -50%);
-    z-index: 0;
+    z-index: $z-index-game-back-stage;
 }
