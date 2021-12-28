@@ -4,7 +4,7 @@ import {FoodEnum} from '../../food/food-type';
 import elkImage1 from './image/elk-1.svg';
 
 export const elkAnimal: AnimalType = {
-    foodIdList: [FoodEnum.meat],
+    foodIdList: [FoodEnum.grass],
     id: AnimalEnum.elk,
     imageList: [elkImage1],
 };

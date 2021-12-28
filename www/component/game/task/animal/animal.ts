@@ -1,8 +1,21 @@
+import {getFoodById} from '../food/food';
+
+import {FoodEnum} from '../food/food-type';
+
 import {AnimalEnum, AnimalType} from './animal-type';
 
 import {bearAnimal} from './bear/bear';
+import {boarAnimal} from './boar/boar';
+import {bullAnimal} from './bull/bull';
+import {catAnimal} from './cat/cat';
+import {chickAnimal} from './chick/chick';
+import {cowAnimal} from './cow/cow';
 import {deerAnimal} from './deer/deer';
+import {dogAnimal} from './dog/dog';
+import {donkeyAnimal} from './donkey/donkey';
+import {elkAnimal} from './elk/elk';
 import {foxAnimal} from './fox/fox';
+
 import {hedgehogAnimal} from './hedgehog/hedgehog';
 import {owlAnimal} from './owl/owl';
 import {rabbitAnimal} from './rabbit/rabbit';
@@ -10,18 +23,10 @@ import {raccoonAnimal} from './raccoon/raccoon';
 import {snakeAnimal} from './snake/snake';
 import {squirrelAnimal} from './squirrel/squirrel';
 import {wolfAnimal} from './wolf/wolf';
-import {boarAnimal} from './boar/boar';
-import {bullAnimal} from './bull/bull';
 import {mouseAnimal} from './mouse/mouse';
-import {catAnimal} from './cat/cat';
-import {chickAnimal} from './chick/chick';
 import {goatAnimal} from './goat/goat';
 import {gooseAnimal} from './goose/goose';
 import {sheepAnimal} from './sheep/sheep';
-import {cowAnimal} from './cow/cow';
-import {dogAnimal} from './dog/dog';
-import {donkeyAnimal} from './donkey/donkey';
-import {elkAnimal} from './elk/elk';
 import {frogAnimal} from './frog/frog';
 import {turkeyAnimal} from './turkey/turkey';
 import {henAnimal} from './hen/hen';
@@ -32,7 +37,18 @@ import {roosterAnimal} from './rooster/rooster';
 import {pigAnimal} from './pig/pig';
 
 export const animalList: Array<AnimalType> = [
-    // cowAnimal,
+    bearAnimal,
+    boarAnimal,
+    bullAnimal,
+    catAnimal,
+    chickAnimal,
+    cowAnimal,
+    deerAnimal,
+    dogAnimal,
+    donkeyAnimal,
+    elkAnimal,
+    foxAnimal,
+
     // moleAnimal,
     // horseAnimal,
     // lizardAnimal,
@@ -41,20 +57,10 @@ export const animalList: Array<AnimalType> = [
     // turkeyAnimal,
     // henAnimal,
     // frogAnimal,
-    // elkAnimal,
-    // donkeyAnimal,
-    dogAnimal,
-    // chickAnimal,
     // sheepAnimal,
     // goatAnimal,
     // gooseAnimal,
-    // bearAnimal,
     // mouseAnimal,
-    // bullAnimal,
-    // boarAnimal,
-    catAnimal,
-    // deerAnimal,
-    // foxAnimal,
     // hedgehogAnimal,
     // owlAnimal,
     // rabbitAnimal,
@@ -75,3 +81,34 @@ export function getAnimalById(id: AnimalEnum): AnimalType {
 
     throw new Error('[getAnimalById]: can not find animal by id');
 }
+
+function logImage(imageSrc: string) {
+    console.log(
+        '%c                ',
+        [
+            'background-size: contain',
+            'line-height: 100px;',
+            'background-repeat: no-repeat',
+            'background-position: center center',
+            `background-image: url("http://localhost:9090${imageSrc}")`,
+        ].join(';')
+    );
+}
+
+function renderAnimalDebug() {
+    animalList.forEach((animal: AnimalType) => {
+        const {id, imageList, foodIdList} = animal;
+
+        console.log('=============[ BEGIN ]=============');
+        console.log(`ID: ${id}`);
+        console.log('Images:');
+        imageList.forEach(logImage);
+        console.log('Foods:');
+        foodIdList.forEach((foodId: FoodEnum) => {
+            getFoodById(foodId).imageList.forEach(logImage);
+        });
+        console.log('=============[ E N D ]=============');
+    });
+}
+
+renderAnimalDebug();

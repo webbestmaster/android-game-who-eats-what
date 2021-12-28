@@ -4,7 +4,7 @@ import {FoodEnum} from '../../food/food-type';
 import catImage1 from './image/cat-1.svg';
 
 export const catAnimal: AnimalType = {
-    foodIdList: [FoodEnum.catBowlFood, FoodEnum.catCanFood],
+    foodIdList: [FoodEnum.catBowlFood, FoodEnum.catCanFood, FoodEnum.fish, FoodEnum.mouse],
     id: AnimalEnum.cat,
     imageList: [catImage1],
 };

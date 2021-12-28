@@ -4,7 +4,7 @@ import {FoodEnum} from '../../food/food-type';
 import boarImage1 from './image/boar.svg';
 
 export const boarAnimal: AnimalType = {
-    foodIdList: [FoodEnum.meat],
+    foodIdList: [FoodEnum.acorns],
     id: AnimalEnum.boar,
     imageList: [boarImage1],
 };
