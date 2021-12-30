@@ -20,17 +20,27 @@ export function getAudioById(audioId: string): HTMLAudioElement {
 
 export type PlayAudioArgumentType = {
     audioId: string;
+    isMuted: boolean;
     src: string;
+    volume: number;
 };
 
 export function playAudio(playAudioData: PlayAudioArgumentType): Promise<unknown> {
-    const {audioId, src} = playAudioData;
+    const {audioId, src, volume, isMuted} = playAudioData;
     const audio = getAudioById(audioId);
 
-    audio.src = '';
-
     return new Promise((resolve: PromiseResolveType<void>, reject: PromiseResolveType<void>) => {
-        audio.src = src;
+        if (!String(audio.src).includes(src)) {
+            audio.src = src;
+        }
+
+        // eslint-disable-next-line unicorn/prefer-add-event-listener
+        audio.onended = () => {
+            audio.src = '';
+            // eslint-disable-next-line unicorn/prefer-add-event-listener
+            audio.oncanplay = null;
+            audio.currentTime = 0;
+        };
 
         // eslint-disable-next-line unicorn/prefer-add-event-listener
         audio.oncanplay = async () => {
@@ -39,12 +49,15 @@ export function playAudio(playAudioData: PlayAudioArgumentType): Promise<unknown
             // audio.playbackRate = 16;
 
             try {
+                audio.muted = isMuted;
+                audio.volume = volume;
                 await audio.play();
                 console.log(`[playAudio]: ${src}`);
                 resolve();
                 // eslint-disable-next-line unicorn/prefer-optional-catch-binding
             } catch (tryToPlayError: unknown) {
                 console.log(`[ERROR] [playAudio]: ${src}`);
+                console.log(tryToPlayError);
                 reject();
             }
         };

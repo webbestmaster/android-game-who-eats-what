@@ -52,6 +52,10 @@ $z-index-game-back-stage: 0;
     object-fit: contain;
     object-position: center;
     width: 75%;
+
+    &.action_block__image__flip {
+        transform: scale(-1, 1);
+    }
 }
 
 .drop_place {

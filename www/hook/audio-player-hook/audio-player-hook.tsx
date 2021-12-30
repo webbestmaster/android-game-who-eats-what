@@ -17,19 +17,18 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
         trackList: trackListInitial,
         isLoop: isLoopInitial,
         audioId: audioIdInitial,
+        volume: audioVolumeInitial,
+        isMuted: audioIsMutedInitial,
     } = config;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-    const [isPlaying, setIsPlaying] = useState<boolean>(isPlayingInitial);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-    const [isShuffle, setIsShuffle] = useState<boolean>(isShuffleInitial);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-    const [trackList, setTrackList] = useState<Array<string>>(trackListInitial);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-    const [isLoop, setIsLoop] = useState<boolean>(isLoopInitial);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-    const [audioId, setAudioId] = useState<string>(audioIdInitial);
+    const [isPlaying] = useState<boolean>(isPlayingInitial);
+    const [isShuffle] = useState<boolean>(isShuffleInitial);
+    const [trackList] = useState<Array<string>>(trackListInitial);
+    const [isLoop] = useState<boolean>(isLoopInitial);
+    const [audioId] = useState<string>(audioIdInitial);
     const [audioIndex, setAudioIndex] = useState<number>(isShuffleInitial ? getRandomNumber(0, trackList.length) : 0);
     const [counter, setCounter] = useState<number>(0);
+    const [volume, setVolume] = useState<number>(audioVolumeInitial);
+    const [isMuted, setIsMuted] = useState<boolean>(audioIsMutedInitial);
     const isDocumentVisible = useDocumentVisibility();
 
     const src = trackList[audioIndex];
@@ -55,13 +54,17 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
     }, [isShuffle, isLoop, audioIndex, counter, trackListLength]);
 
     useEffect(() => {
+        getAudioById(audioId).volume = volume;
+    }, [audioId, volume]);
+
+    useEffect(() => {
         if (!isPlaying) {
             return;
         }
 
         const audio = getAudioById(audioId);
 
-        const playAudioData: PlayAudioArgumentType = {audioId, src};
+        const playAudioData: PlayAudioArgumentType = {audioId, isMuted, src, volume};
 
         playAudio(playAudioData)
             .then(() => {
@@ -79,7 +82,7 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
                 console.log(`[ERROR] [useAudioPlayer]: ${playAudioError}`);
                 setTimeout((): void => setCounter(counter + 1), 1e3);
             });
-    }, [audioId, counter, isPlaying, onAudioEnded, src]);
+    }, [audioId, counter, isPlaying, onAudioEnded, src, volume, isMuted]);
 
     useEffect(() => {
         console.log('/// begin - currentAudio = getAudioById');
@@ -107,16 +110,13 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
         const currentAudio = getAudioById(audioId);
 
         try {
-            currentAudio.volume = isDocumentVisible ? 1 : 0;
+            currentAudio.muted = !isDocumentVisible || isMuted;
         } catch (volumeError: unknown) {
             console.log(volumeError);
         }
-    }, [isDocumentVisible, audioId]);
+    }, [isDocumentVisible, audioId, isMuted]);
 
     return useMemo<AudioPlayerType>((): AudioPlayerType => {
-        return {
-            getCurrentAudio: () => getAudioById(audioId),
-            // play audio by src and audioId
-        };
-    }, [audioId]);
+        return {setIsMuted, setVolume};
+    }, []);
 }

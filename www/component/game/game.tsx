@@ -5,6 +5,8 @@ import {useSingleTouch} from '../../hook/single-touch-hook/single-touch-hook';
 import {SingleTouchCoordinatesType} from '../../hook/single-touch-hook/single-touch-type';
 import {getRandomItem} from '../../util/array';
 import {classNames} from '../../util/css';
+import {getRandomBoolean} from '../../util/boolean';
+import {playAudio} from '../../hook/audio-player-hook/audio-player-helper';
 
 import gameStyle from './game.scss';
 import {InteractiveBlockStateType} from './active-block/active-block-type';
@@ -25,6 +27,7 @@ export function Game(props: PropsType): JSX.Element {
     const [isSwiped] = useState<boolean>(Math.random() > 0.5);
     const [food] = useState<FoodType>(getRandomItem<FoodType>(foodList));
     const [foodImage] = useState<string>(getRandomItem<string>(food.imageList));
+    const [foodImageReverseList] = useState<Array<boolean>>([1, 2, 3].map<boolean>(getRandomBoolean));
     const {width, height} = useScreenSize();
     const minScreenSize = Math.min(width, height);
     const dishSize = Math.round(minScreenSize / 3.5);
@@ -96,7 +99,12 @@ export function Game(props: PropsType): JSX.Element {
                 <button
                     className={gameStyle.drop_place}
                     onClick={() => {
-                        console.log('///// play audio');
+                        playAudio({
+                            audioId: animal.id,
+                            isMuted: false,
+                            src: getRandomItem<string>(animal.soundList),
+                            volume: 1,
+                        });
                     }}
                     style={dropPlaceData}
                     type="button"
@@ -139,7 +147,13 @@ export function Game(props: PropsType): JSX.Element {
                             zIndex: isActiveBlock ? blockZIndexActive : blockZIndex,
                         }}
                     >
-                        <img alt={food.id} className={gameStyle.action_block__image} src={foodImage} />
+                        <img
+                            alt={food.id}
+                            className={classNames(gameStyle.action_block__image, {
+                                [gameStyle.action_block__image__flip]: foodImageReverseList[index],
+                            })}
+                            src={foodImage}
+                        />
                     </div>
                 );
             })}

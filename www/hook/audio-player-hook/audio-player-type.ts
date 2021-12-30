@@ -1,21 +1,14 @@
-/* global HTMLAudioElement */
-
 export type AudioPlayerConfigType = {
     audioId: string;
     isLoop: boolean;
+    isMuted: boolean;
     isPlaying: boolean;
     isShuffle: boolean;
     trackList: Array<string>;
+    volume: number;
 };
 
-/*
-export enum AudioPlayerStateEnum {
-    playing = 'playing',
-    paused = 'paused',
-}
-*/
-
 export type AudioPlayerType = {
-    getCurrentAudio: () => HTMLAudioElement;
-    // state: AudioPlayerStateEnum,
+    setIsMuted: (isMuted: boolean) => void;
+    setVolume: (volume: number) => void;
 };

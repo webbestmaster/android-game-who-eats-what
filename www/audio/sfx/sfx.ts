@@ -1,4 +1,4 @@
-import click1 from './file/cartoon-boing.mp3';
-import click2 from './file/cartoon-cowbell.mp3';
+import goodBell from './file/good-bell.mp3';
+import gameEnd from './file/game-end.mp3';
 
-export const sfxAudioList: Array<string> = [click1, click2];
+export const sfxAudioMap = {gameEnd, goodBell} as const;

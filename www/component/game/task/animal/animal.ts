@@ -15,26 +15,25 @@ import {dogAnimal} from './dog/dog';
 import {donkeyAnimal} from './donkey/donkey';
 import {elkAnimal} from './elk/elk';
 import {foxAnimal} from './fox/fox';
-
-import {hedgehogAnimal} from './hedgehog/hedgehog';
-import {owlAnimal} from './owl/owl';
-import {rabbitAnimal} from './rabbit/rabbit';
-import {raccoonAnimal} from './raccoon/raccoon';
-import {snakeAnimal} from './snake/snake';
-import {squirrelAnimal} from './squirrel/squirrel';
-import {wolfAnimal} from './wolf/wolf';
-import {mouseAnimal} from './mouse/mouse';
+import {frogAnimal} from './frog/frog';
 import {goatAnimal} from './goat/goat';
 import {gooseAnimal} from './goose/goose';
-import {sheepAnimal} from './sheep/sheep';
-import {frogAnimal} from './frog/frog';
-import {turkeyAnimal} from './turkey/turkey';
+import {hedgehogAnimal} from './hedgehog/hedgehog';
 import {henAnimal} from './hen/hen';
 import {horseAnimal} from './horse/horse';
 import {lizardAnimal} from './lizard/lizard';
 import {moleAnimal} from './mole/mole';
-import {roosterAnimal} from './rooster/rooster';
+import {mouseAnimal} from './mouse/mouse';
+import {owlAnimal} from './owl/owl';
 import {pigAnimal} from './pig/pig';
+import {rabbitAnimal} from './rabbit/rabbit';
+import {raccoonAnimal} from './raccoon/raccoon';
+import {roosterAnimal} from './rooster/rooster';
+import {sheepAnimal} from './sheep/sheep';
+import {snakeAnimal} from './snake/snake';
+import {squirrelAnimal} from './squirrel/squirrel';
+import {turkeyAnimal} from './turkey/turkey';
+import {wolfAnimal} from './wolf/wolf';
 
 export const animalList: Array<AnimalType> = [
     bearAnimal,
@@ -48,26 +47,25 @@ export const animalList: Array<AnimalType> = [
     donkeyAnimal,
     elkAnimal,
     foxAnimal,
-
-    // moleAnimal,
-    // horseAnimal,
-    // lizardAnimal,
-    // roosterAnimal,
-    // pigAnimal,
-    // turkeyAnimal,
-    // henAnimal,
-    // frogAnimal,
-    // sheepAnimal,
-    // goatAnimal,
-    // gooseAnimal,
-    // mouseAnimal,
-    // hedgehogAnimal,
-    // owlAnimal,
-    // rabbitAnimal,
-    // raccoonAnimal,
-    // snakeAnimal,
-    // squirrelAnimal,
-    // wolfAnimal,
+    frogAnimal,
+    goatAnimal,
+    gooseAnimal,
+    hedgehogAnimal,
+    henAnimal,
+    horseAnimal,
+    lizardAnimal,
+    moleAnimal,
+    mouseAnimal,
+    owlAnimal,
+    pigAnimal,
+    rabbitAnimal,
+    raccoonAnimal,
+    roosterAnimal,
+    sheepAnimal,
+    snakeAnimal,
+    squirrelAnimal,
+    turkeyAnimal,
+    wolfAnimal,
 ];
 
 export function getAnimalById(id: AnimalEnum): AnimalType {

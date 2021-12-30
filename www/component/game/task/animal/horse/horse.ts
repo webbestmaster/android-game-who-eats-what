@@ -3,8 +3,11 @@ import {FoodEnum} from '../../food/food-type';
 
 import horseImage1 from './image/horse-1.svg';
 
+import horseSound1 from './sound/horse-1.mp3';
+
 export const horseAnimal: AnimalType = {
-    foodIdList: [FoodEnum.meat],
+    foodIdList: [FoodEnum.grass],
     id: AnimalEnum.horse,
     imageList: [horseImage1],
+    soundList: [horseSound1],
 };

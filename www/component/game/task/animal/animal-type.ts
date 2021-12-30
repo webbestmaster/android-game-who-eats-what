@@ -37,4 +37,5 @@ export type AnimalType = {
     foodIdList: Array<FoodEnum>;
     id: AnimalEnum;
     imageList: Array<string>;
+    soundList: Array<string>;
 };

@@ -11,6 +11,15 @@ import {grassFood} from './grass/grass';
 import {grainFood} from './grain/grain';
 import {mouseFood} from './mouse/mouse';
 import {rabbitFood} from './rabbit/rabbit';
+import {blueberryFood} from './blueberry/blueberry';
+import {flyFood} from './fly/fly';
+import {mosquitoFood} from './mosquito/mosquito';
+import {wormFood} from './worm/worm';
+import {cheeseFood} from './cheese/cheese';
+import {turnipFood} from './turnip/turnip';
+import {carrotFood} from './carrot/carrot';
+import {frogFood} from './frog/frog';
+import {nutsFood} from './nuts/nuts';
 
 export const foodList: Array<FoodType> = [
     catBowlFoodFood,
@@ -25,6 +34,15 @@ export const foodList: Array<FoodType> = [
     grainFood,
     mouseFood,
     rabbitFood,
+    blueberryFood,
+    flyFood,
+    mosquitoFood,
+    wormFood,
+    cheeseFood,
+    turnipFood,
+    carrotFood,
+    frogFood,
+    nutsFood,
 ];
 
 export function getFoodById(id: FoodEnum): FoodType {
