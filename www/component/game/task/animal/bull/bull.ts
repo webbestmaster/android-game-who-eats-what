@@ -6,7 +6,7 @@ import bullImage1 from './image/bull.svg';
 import bullSound1 from './sound/bull-1.mp3';
 
 export const bullAnimal: AnimalType = {
-    foodIdList: [FoodEnum.grass],
+    foodIdList: [FoodEnum.grass, FoodEnum.apple],
     id: AnimalEnum.bull,
     imageList: [bullImage1],
     soundList: [bullSound1],

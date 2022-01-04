@@ -5,43 +5,40 @@ import {useSingleTouch} from '../../hook/single-touch-hook/single-touch-hook';
 import {SingleTouchCoordinatesType} from '../../hook/single-touch-hook/single-touch-type';
 import {getRandomItem} from '../../util/array';
 import {classNames} from '../../util/css';
-import {getRandomBoolean} from '../../util/boolean';
 import {playAudio} from '../../hook/audio-player-hook/audio-player-helper';
 
 import gameStyle from './game.scss';
-import {InteractiveBlockStateType} from './active-block/active-block-type';
-import {getDefaultCoordinates, getDropPlaceData, getIsInPlace} from './game-helper';
-import {OnGameEndType} from './game-type';
+import {foodToImage, getDefaultCoordinates, getDropPlaceData, getIsInPlace, getQuestionFoodList} from './game-helper';
+import {ArrayTrioType, FoodImageType, OnAnswerType} from './game-type';
 import {AnimalType} from './task/animal/animal-type';
-import {foodList} from './task/food/food';
-import {FoodType} from './task/food/food-type';
+import {FoodEnum, FoodType} from './task/food/food-type';
 
 type PropsType = {
     animal: AnimalType;
-    onGameEnd: OnGameEndType;
+    onGoodAnswer: OnAnswerType;
+    onWrongAnswer: OnAnswerType;
 };
 
 export function Game(props: PropsType): JSX.Element {
-    const {onGameEnd, animal} = props;
+    const {onGoodAnswer, animal, onWrongAnswer} = props;
     const [animalImage] = useState<string>(getRandomItem<string>(animal.imageList));
     const [isSwiped] = useState<boolean>(Math.random() > 0.5);
-    const [food] = useState<FoodType>(getRandomItem<FoodType>(foodList));
-    const [foodImage] = useState<string>(getRandomItem<string>(food.imageList));
-    const [foodImageReverseList] = useState<Array<boolean>>([1, 2, 3].map<boolean>(getRandomBoolean));
+    const [questionFoodList] = useState<ArrayTrioType<FoodType>>(() => getQuestionFoodList(animal));
+    const [questionFoodImageList] = useState<ArrayTrioType<FoodImageType>>([
+        foodToImage(questionFoodList[0]),
+        foodToImage(questionFoodList[1]),
+        foodToImage(questionFoodList[2]),
+    ]);
     const {width, height} = useScreenSize();
     const minScreenSize = Math.min(width, height);
     const dishSize = Math.round(minScreenSize / 3.5);
     const halfDishSize = Math.round(dishSize / 2);
-    const dropPlaceData = useMemo(() => {
-        return getDropPlaceData({dishSize, screen: {height, width}});
-    }, [dishSize, height, width]);
+    const dropPlaceData = useMemo(
+        () => getDropPlaceData({dishSize, screen: {height, width}}),
+        [dishSize, height, width]
+    );
     const [attemptCount, setAttemptCount] = useState<number>(0);
-
-    console.log('-------------- /// game');
-
-    const blockList: Array<InteractiveBlockStateType> = [{blockId: 'one'}, {blockId: 'two'}, {blockId: 'three'}];
-
-    const [activeBlockId, setActiveBlockId] = useState<string>('');
+    const [activeBlockId, setActiveBlockId] = useState<FoodEnum | ''>('');
 
     const onTouchEnd = useCallback(
         (touchEndCoordinates: SingleTouchCoordinatesType) => {
@@ -52,39 +49,38 @@ export function Game(props: PropsType): JSX.Element {
                 width: dropPlaceData.width,
             });
 
-            console.log('activeBlockId', activeBlockId);
-
             if (isInDropPlace && activeBlockId) {
                 const newAttemptCount = attemptCount + 1;
 
                 setAttemptCount(newAttemptCount);
+                const onAnswerData = {attemptCount: newAttemptCount};
 
-                if (activeBlockId === 'two') {
-                    onGameEnd({attemptCount: newAttemptCount});
+                if (animal.foodIdList.includes(activeBlockId)) {
+                    onGoodAnswer(onAnswerData);
+                } else {
+                    onWrongAnswer(onAnswerData);
                 }
             }
 
             setActiveBlockId('');
         },
-        [dropPlaceData, onGameEnd, activeBlockId, attemptCount]
+        [animal, dropPlaceData, onGoodAnswer, onWrongAnswer, activeBlockId, attemptCount]
     );
 
-    const singleTouchArgument = useMemo(() => {
-        return {id: 'game', onTouchEnd};
-    }, [onTouchEnd]);
+    const singleTouchArgument = useMemo(() => ({id: 'game', onTouchEnd}), [onTouchEnd]);
 
     const {coordinates, isPressed} = useSingleTouch(singleTouchArgument);
 
     return (
         <div className={gameStyle.game}>
-            {blockList.map((block: InteractiveBlockStateType, index: number): JSX.Element => {
-                const {blockId} = block;
+            {questionFoodImageList.map((questionFoodImage: FoodImageType, index: number): JSX.Element => {
+                const {src} = questionFoodImage;
                 const defaultCoordinates = getDefaultCoordinates({dishSize, height, index, width});
 
                 return (
                     <div
                         className={gameStyle.plate}
-                        key={'plate-' + blockId}
+                        key={`plate-${src}`}
                         style={{
                             height: dishSize,
                             left: defaultCoordinates.pageX,
@@ -119,9 +115,9 @@ export function Game(props: PropsType): JSX.Element {
                 </button>
             </div>
 
-            {blockList.map((block: InteractiveBlockStateType, index: number): JSX.Element => {
-                const {blockId} = block;
-                const isActiveBlock: boolean = blockId === activeBlockId && isPressed;
+            {questionFoodList.map((questionFood: FoodType, index: number): JSX.Element => {
+                const {id} = questionFood;
+                const isActiveBlock: boolean = id === activeBlockId && isPressed;
                 const transformCoordinates: SingleTouchCoordinatesType = isActiveBlock
                     ? coordinates
                     : getDefaultCoordinates({dishSize, height, index, width});
@@ -132,14 +128,15 @@ export function Game(props: PropsType): JSX.Element {
                 const blockZIndex = 2;
                 const blockZIndexActive = 3;
                 const transform = `translate3d(${translateX}px,${translateY}px,0px)`;
+                const {src, isReversed} = questionFoodImageList[index];
 
                 return (
                     <div
                         className={classNames(gameStyle.action_block, {
                             [gameStyle.action_block__active]: isActiveBlock,
                         })}
-                        key={'food-' + blockId}
-                        onTouchStart={() => setActiveBlockId(blockId)}
+                        key={'food-' + src}
+                        onTouchStart={() => setActiveBlockId(id)}
                         style={{
                             height: dishSize,
                             transform,
@@ -148,11 +145,11 @@ export function Game(props: PropsType): JSX.Element {
                         }}
                     >
                         <img
-                            alt={food.id}
+                            alt={id}
                             className={classNames(gameStyle.action_block__image, {
-                                [gameStyle.action_block__image__flip]: foodImageReverseList[index],
+                                [gameStyle.action_block__image__flip]: isReversed,
                             })}
-                            src={foodImage}
+                            src={src}
                         />
                     </div>
                 );

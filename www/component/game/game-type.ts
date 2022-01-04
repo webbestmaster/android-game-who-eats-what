@@ -1,21 +1,12 @@
-/*
-export enum GameFlowEnum {
-    changeTask = 'change-task',
-    endGame = 'end-game',
-    feedAvailable = 'feed-available',
-    showTask = 'show-task', // use change task, try to remove
-}
-
-export enum GameMedalEnum {
-    bronze = 'bronze',
-    empty = 'empty',
-    gold = 'gold',
-    silver = 'silver',
-}
-*/
-
-export type GameEndResultType = {
+export type GameResultType = {
     attemptCount: number;
 };
 
-export type OnGameEndType = (result: GameEndResultType) => void;
+export type OnAnswerType = (result: GameResultType) => void;
+
+export type ArrayTrioType<ItemType> = [ItemType, ItemType, ItemType];
+
+export type FoodImageType = {
+    isReversed: boolean;
+    src: string;
+};

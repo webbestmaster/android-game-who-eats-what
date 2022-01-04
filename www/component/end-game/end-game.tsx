@@ -1,4 +1,4 @@
-import {GameEndResultType} from '../game/game-type';
+import {GameResultType} from '../game/game-type';
 
 import star1 from './image/star-1.svg';
 import star2 from './image/star-2.svg';
@@ -8,7 +8,7 @@ import endGameStyle from './end-game.scss';
 import endGameBackground from './image/end-game-popup.svg';
 
 type PropsType = {
-    gameResultList: Array<GameEndResultType>;
+    gameResultList: Array<GameResultType>;
     handleNewGame: () => void;
 };
 

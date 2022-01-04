@@ -1,5 +1,12 @@
 import {SingleTouchCoordinatesType} from '../../hook/single-touch-hook/single-touch-type';
 import {PlaceType, SizeType} from '../../util/type';
+import {getRandomItem} from '../../util/array';
+import {getRandomBoolean} from '../../util/boolean';
+
+import {FoodType} from './task/food/food-type';
+import {AnimalType} from './task/animal/animal-type';
+import {ArrayTrioType, FoodImageType} from './game-type';
+import {foodList} from './task/food/food';
 
 type DropPlaceType = {
     height: number;
@@ -84,4 +91,26 @@ export function getIsInPlace(coordinates: SingleTouchCoordinatesType, place: Pla
     console.log('[getIsInPlace]: it is in place');
 
     return true;
+}
+
+export function getQuestionFoodList(animal: AnimalType): ArrayTrioType<FoodType> {
+    const {foodIdList} = animal;
+
+    let candidateFoodList: ArrayTrioType<FoodType> = [foodList[0], foodList[1], foodList[2]];
+    let shuffledList: Array<FoodType> = [];
+
+    // eslint-disable-next-line no-loops/no-loops
+    do {
+        shuffledList = [...foodList].sort((): number => Math.random() - 0.5);
+        candidateFoodList = [shuffledList[0], shuffledList[1], shuffledList[2]];
+    } while (!candidateFoodList.some((food: FoodType): boolean => foodIdList.includes(food.id)));
+
+    return candidateFoodList;
+}
+
+export function foodToImage(food: FoodType): FoodImageType {
+    return {
+        isReversed: getRandomBoolean(),
+        src: getRandomItem<string>(food.imageList),
+    };
 }

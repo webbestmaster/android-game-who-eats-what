@@ -6,7 +6,7 @@ import pigImage1 from './image/pig-1.svg';
 import pigSound1 from './sound/pig-1.mp3';
 
 export const pigAnimal: AnimalType = {
-    foodIdList: [FoodEnum.turnip, FoodEnum.grass],
+    foodIdList: [FoodEnum.turnip, FoodEnum.grass, FoodEnum.apple],
     id: AnimalEnum.pig,
     imageList: [pigImage1],
     soundList: [pigSound1],

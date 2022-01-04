@@ -1,8 +1,8 @@
 import {FoodEnum} from '../food/food-type';
 
 export enum AnimalEnum {
-    bear = 'bear',
     boar = 'boar',
+    brownBear = 'brown bear',
     bull = 'bull',
     cat = 'cat',
     chick = 'chick',
@@ -23,6 +23,7 @@ export enum AnimalEnum {
     mouse = 'mouse',
     owl = 'owl',
     pig = 'pig',
+    polarBear = 'polar bear',
     rabbit = 'rabbit',
     raccoon = 'raccoon',
     rooster = 'rooster',

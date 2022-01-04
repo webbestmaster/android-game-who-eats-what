@@ -6,7 +6,7 @@ import horseImage1 from './image/horse-1.svg';
 import horseSound1 from './sound/horse-1.mp3';
 
 export const horseAnimal: AnimalType = {
-    foodIdList: [FoodEnum.grass],
+    foodIdList: [FoodEnum.grass, FoodEnum.apple],
     id: AnimalEnum.horse,
     imageList: [horseImage1],
     soundList: [horseSound1],

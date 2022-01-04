@@ -4,8 +4,8 @@ import {FoodEnum} from '../food/food-type';
 
 import {AnimalEnum, AnimalType} from './animal-type';
 
-import {bearAnimal} from './bear/bear';
 import {boarAnimal} from './boar/boar';
+import {brownBearAnimal} from './brown-bear/brown-bear';
 import {bullAnimal} from './bull/bull';
 import {catAnimal} from './cat/cat';
 import {chickAnimal} from './chick/chick';
@@ -26,6 +26,7 @@ import {moleAnimal} from './mole/mole';
 import {mouseAnimal} from './mouse/mouse';
 import {owlAnimal} from './owl/owl';
 import {pigAnimal} from './pig/pig';
+import {polarBearAnimal} from './polar-bear/polar-bear';
 import {rabbitAnimal} from './rabbit/rabbit';
 import {raccoonAnimal} from './raccoon/raccoon';
 import {roosterAnimal} from './rooster/rooster';
@@ -36,8 +37,8 @@ import {turkeyAnimal} from './turkey/turkey';
 import {wolfAnimal} from './wolf/wolf';
 
 export const animalList: Array<AnimalType> = [
-    bearAnimal,
     boarAnimal,
+    brownBearAnimal,
     bullAnimal,
     catAnimal,
     chickAnimal,
@@ -58,6 +59,7 @@ export const animalList: Array<AnimalType> = [
     mouseAnimal,
     owlAnimal,
     pigAnimal,
+    polarBearAnimal,
     rabbitAnimal,
     raccoonAnimal,
     roosterAnimal,

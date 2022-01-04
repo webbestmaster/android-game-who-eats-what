@@ -1,5 +1,6 @@
 export enum FoodEnum {
     acorns = 'acorns',
+    apple = 'apple',
     blueberry = 'blueberry',
     carrot = 'carrot',
     catBowlFood = 'cat bowl food',
