@@ -52,6 +52,7 @@
     "es5-shim": "^4.6.4",
     "es6-shim": "^0.35.6",
     "es7-object-polyfill": "^1.0.1",
+    "polyfill-array-includes": "^2.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-localization-library": "^0.0.18",
