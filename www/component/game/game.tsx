@@ -6,6 +6,7 @@ import {SingleTouchCoordinatesType} from '../../hook/single-touch-hook/single-to
 import {getRandomItem} from '../../util/array';
 import {classNames} from '../../util/css';
 import {playAudio} from '../../hook/audio-player-hook/audio-player-helper';
+import {getRandomBoolean} from '../../util/boolean';
 
 import gameStyle from './game.scss';
 import {foodToImage, getDefaultCoordinates, getDropPlaceData, getIsInPlace, getQuestionFoodList} from './game-helper';
@@ -22,7 +23,7 @@ type PropsType = {
 export function Game(props: PropsType): JSX.Element {
     const {onGoodAnswer, animal, onWrongAnswer} = props;
     const [animalImage] = useState<string>(getRandomItem<string>(animal.imageList));
-    const [isSwiped] = useState<boolean>(Math.random() > 0.5);
+    const [isSwiped] = useState<boolean>(getRandomBoolean());
     const [questionFoodList] = useState<ArrayTrioType<FoodType>>(() => getQuestionFoodList(animal));
     const [questionFoodImageList] = useState<ArrayTrioType<FoodImageType>>([
         foodToImage(questionFoodList[0]),
@@ -95,12 +96,7 @@ export function Game(props: PropsType): JSX.Element {
                 <button
                     className={gameStyle.drop_place}
                     onClick={() => {
-                        playAudio({
-                            audioId: animal.id,
-                            isMuted: false,
-                            src: getRandomItem<string>(animal.soundList),
-                            volume: 1,
-                        });
+                        playAudio({src: getRandomItem<string>(animal.soundList)});
                     }}
                     style={dropPlaceData}
                     type="button"

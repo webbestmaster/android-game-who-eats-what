@@ -1,6 +1,6 @@
 import {useScreenSize} from 'react-system-hook';
 
-import {GameResultType} from '../../game/game-type';
+import {AnswerResultType} from '../../game/game-type';
 
 import medalItemStyle from './medal-item.scss';
 
@@ -9,7 +9,7 @@ import medal2 from './image/medal-2.svg';
 import medal3 from './image/medal-3.svg';
 
 type PropsType = {
-    gameResult: GameResultType;
+    gameResult: AnswerResultType;
 };
 
 export function MedalItem(props: PropsType): JSX.Element {

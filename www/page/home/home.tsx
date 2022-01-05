@@ -6,18 +6,17 @@ import {ambientAudioList} from '../../audio/ambient/ambient';
 import {AnimalType} from '../../component/game/task/animal/animal-type';
 import {animalList} from '../../component/game/task/animal/animal';
 import {getRandomItem} from '../../util/array';
-import {GameResultType, OnAnswerType} from '../../component/game/game-type';
+import {AnswerResultType, OnAnswerType} from '../../component/game/game-type';
 import {Popup} from '../../layout/popup/popup';
 import {EndGame} from '../../component/end-game/end-game';
 import {MedalList} from '../../component/medal-list/medal-list';
 import {playAudio} from '../../hook/audio-player-hook/audio-player-helper';
-
 import {sfxAudioMap} from '../../audio/sfx/sfx';
 
 import homeStyle from './home.scss';
 
 export function Home(): JSX.Element {
-    const ignoredAudioPlayer = useAudioPlayer({
+    useAudioPlayer({
         audioId: 'ambient',
         isLoop: true,
         isMuted: false,
@@ -27,9 +26,9 @@ export function Home(): JSX.Element {
         volume: 0.3,
     });
 
-    const maxGameCount = 3;
+    const maxGameCount = 10;
     const [isEndGamePopupOpen, setIsEndGamePopupOpen] = useState<boolean>(false);
-    const [gameResultList, setGameResultList] = useState<Array<GameResultType>>([]);
+    const [answerResultList, setAnswerResultList] = useState<Array<AnswerResultType>>([]);
     const [animal, setAnimal] = useState<AnimalType>(getRandomItem<AnimalType>(animalList));
 
     const setNewRandomAnimal = useCallback(() => {
@@ -45,52 +44,37 @@ export function Home(): JSX.Element {
 
     const resetView = useCallback(() => {
         setIsEndGamePopupOpen(false);
-        setGameResultList([]);
+        setAnswerResultList([]);
         setNewRandomAnimal();
     }, [setNewRandomAnimal]);
 
     const onGoodAnswer: OnAnswerType = useCallback(
-        (gameResult: GameResultType) => {
-            const newGameResultList = [...gameResultList, gameResult];
+        (answerResult: AnswerResultType) => {
+            const newAnswerResultList = [...answerResultList, answerResult];
 
-            setGameResultList(newGameResultList);
+            setAnswerResultList(newAnswerResultList);
 
-            const isFullGameEnd = newGameResultList.length >= maxGameCount;
+            const isFullGameEnd = newAnswerResultList.length >= maxGameCount;
 
             if (isFullGameEnd) {
-                playAudio({
-                    audioId: 'end-game',
-                    isMuted: false,
-                    src: sfxAudioMap.gameEnd,
-                    volume: 1,
-                });
+                playAudio({src: sfxAudioMap.gameEnd});
 
                 setIsEndGamePopupOpen(true);
                 console.log('all games is end');
                 return;
             }
 
-            playAudio({
-                audioId: 'good-answer',
-                isMuted: false,
-                src: sfxAudioMap.goodBell,
-                volume: 1,
-            });
+            playAudio({src: sfxAudioMap.goodBell});
 
             setNewRandomAnimal();
 
             console.log('game is end');
         },
-        [gameResultList, setNewRandomAnimal]
+        [answerResultList, setNewRandomAnimal]
     );
 
     const onWrongAnswer: OnAnswerType = useCallback(() => {
-        playAudio({
-            audioId: 'bad-answer',
-            isMuted: false,
-            src: sfxAudioMap.badBell,
-            volume: 1,
-        });
+        playAudio({src: sfxAudioMap.badBell});
     }, []);
 
     return (
@@ -101,9 +85,9 @@ export function Home(): JSX.Element {
                 onGoodAnswer={onGoodAnswer}
                 onWrongAnswer={onWrongAnswer}
             />
-            <MedalList gameResultList={gameResultList} />
+            <MedalList answerResultList={answerResultList} />
             <Popup closePopup={resetView} hasCloseButton isOpen={isEndGamePopupOpen}>
-                {isEndGamePopupOpen ? <EndGame gameResultList={gameResultList} handleNewGame={resetView} /> : null}
+                {isEndGamePopupOpen ? <EndGame answerResultList={answerResultList} handleNewGame={resetView} /> : null}
             </Popup>
         </div>
     );

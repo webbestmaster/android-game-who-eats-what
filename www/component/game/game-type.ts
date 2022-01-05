@@ -1,8 +1,8 @@
-export type GameResultType = {
+export type AnswerResultType = {
     attemptCount: number;
 };
 
-export type OnAnswerType = (result: GameResultType) => void;
+export type OnAnswerType = (result: AnswerResultType) => void;
 
 export type ArrayTrioType<ItemType> = [ItemType, ItemType, ItemType];
 
