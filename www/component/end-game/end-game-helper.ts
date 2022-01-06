@@ -2,7 +2,7 @@ import {AnswerResultType} from '../game/game-type';
 
 export function getStarCount(gameResultList: Array<AnswerResultType>): number {
     const currentAttemptCount = gameResultList.reduce<number>(
-        (accum: number, current: AnswerResultType) => accum + current.attemptCount,
+        (accum: number, current: AnswerResultType) => accum + Math.min(current.attemptCount, 3),
         0
     );
     const minAttemptCount = gameResultList.length;
