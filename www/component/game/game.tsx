@@ -43,11 +43,12 @@ export function Game(props: PropsType): JSX.Element {
 
     const onTouchEnd = useCallback(
         (touchEndCoordinates: SingleTouchCoordinatesType) => {
+            const extraAccuracy = 20;
             const isInDropPlace = getIsInPlace(touchEndCoordinates, {
-                height: dropPlaceData.height,
-                left: dropPlaceData.left,
-                top: dropPlaceData.top,
-                width: dropPlaceData.width,
+                height: dropPlaceData.height - extraAccuracy * 2,
+                left: dropPlaceData.left + extraAccuracy,
+                top: dropPlaceData.top + extraAccuracy,
+                width: dropPlaceData.width - extraAccuracy * 2,
             });
 
             if (isInDropPlace && activeBlockId) {

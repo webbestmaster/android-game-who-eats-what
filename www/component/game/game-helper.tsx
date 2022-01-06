@@ -68,9 +68,14 @@ export function getDefaultCoordinates(data: GetDefaultCoordinatesArgumentType): 
     }
 }
 
+// eslint-disable-next-line complexity
 export function getIsInPlace(coordinates: SingleTouchCoordinatesType, place: PlaceType): boolean {
     const {pageY, pageX} = coordinates;
     const {top, width, left, height} = place;
+
+    if (Number.isNaN(pageY) || Number.isNaN(pageX)) {
+        return false;
+    }
 
     if (pageX <= left) {
         return false;
