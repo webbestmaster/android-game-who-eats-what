@@ -63,6 +63,8 @@ function onPointStart(event: TouchEvent) {
 
     startCoordinates.pageX = singleTouchCoordinates.pageX;
     startCoordinates.pageY = singleTouchCoordinates.pageY;
+    moveCoordinates.pageX = singleTouchCoordinates.pageX;
+    moveCoordinates.pageY = singleTouchCoordinates.pageY;
 
     pointListenerMapList.forEach((listenerMap: PointListenerMapType) => {
         listenerMap.onPointStart({...startCoordinates});
