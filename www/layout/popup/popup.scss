@@ -49,21 +49,35 @@
 .popup__close_button {
     background-color: transparent;
     border: 0;
-    border-radius: 100%;
     box-sizing: border-box;
     display: block;
-    font-family: Tahoma, sans-serif;
-    font-size: 30px;
     height: 50px;
-    line-height: 30px;
     margin: 0;
-    padding: 2px 0 0;
+    padding: 0;
     position: absolute;
     right: 0;
     top: 0;
     vertical-align: center;
     width: 50px;
     z-index: 1;
+
+    &:before,
+    &:after {
+        content: '';
+        height: 4px;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        width: 22px;
+    }
+
+    &:before {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &:after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
 }
 
 .popup__theme__dark {
@@ -72,7 +86,10 @@
     }
 
     .popup__close_button {
-        color: #ccc;
+        &:before,
+        &:after {
+            background-color: #ccc;
+        }
     }
 }
 
@@ -82,6 +99,9 @@
     }
 
     .popup__close_button {
-        color: #333;
+        &:before,
+        &:after {
+            background-color: #333;
+        }
     }
 }

@@ -1,11 +1,10 @@
 import {createPortal} from 'react-dom';
 
 import {getBody} from '../../hook/single-touch-hook/single-touch-helper';
-
 import {classNames} from '../../util/css';
+import {IsRender} from '../is-render/is-render';
 
 import {PopupThemeEnum} from './popup-type';
-
 import popupStyle from './popup.scss';
 
 type PropsType = {
@@ -34,11 +33,9 @@ export function Popup(props: PropsType): JSX.Element | null {
             <div className={popupStyle.popup__children__wrapper}>
                 <div className={popupStyle.popup__children__content}>{children}</div>
             </div>
-            {hasCloseButton ? (
-                <button className={popupStyle.popup__close_button} onClick={closePopup} type="button">
-                    &#10006;
-                </button>
-            ) : null}
+            <IsRender isRender={hasCloseButton}>
+                <button className={popupStyle.popup__close_button} onClick={closePopup} type="button" />
+            </IsRender>
         </div>
     );
 
