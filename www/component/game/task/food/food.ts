@@ -15,7 +15,7 @@ import {frogFood} from './frog/frog';
 import {grainFood} from './grain/grain';
 import {grassFood} from './grass/grass';
 import {honeyCombFood} from './honey-comb/honey-comb';
-// import {meatFood} from './meat/meat';
+import {meatFood} from './meat/meat';
 import {mosquitoFood} from './mosquito/mosquito';
 import {mouseFood} from './mouse/mouse';
 import {nutsFood} from './nuts/nuts';
@@ -39,7 +39,7 @@ export const foodList: Array<FoodType> = [
     grainFood,
     grassFood,
     honeyCombFood,
-    // meatFood,
+    meatFood,
     mosquitoFood,
     mouseFood,
     nutsFood,

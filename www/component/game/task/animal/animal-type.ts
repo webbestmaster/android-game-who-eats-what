@@ -18,6 +18,7 @@ export enum AnimalEnum {
     hedgehog = 'hedgehog',
     hen = 'hen',
     horse = 'horse',
+    lion = 'lion',
     lizard = 'lizard',
     mole = 'mole',
     mouse = 'mouse',
@@ -30,6 +31,7 @@ export enum AnimalEnum {
     sheep = 'sheep',
     snake = 'snake',
     squirrel = 'squirrel',
+    tiger = 'tiger',
     turkey = 'turkey',
     wolf = 'wolf',
 }

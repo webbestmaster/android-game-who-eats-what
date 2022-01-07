@@ -21,6 +21,7 @@ import {gooseAnimal} from './goose/goose';
 import {hedgehogAnimal} from './hedgehog/hedgehog';
 import {henAnimal} from './hen/hen';
 import {horseAnimal} from './horse/horse';
+import {lionAnimal} from './lion/lion';
 import {lizardAnimal} from './lizard/lizard';
 import {moleAnimal} from './mole/mole';
 import {mouseAnimal} from './mouse/mouse';
@@ -33,6 +34,7 @@ import {roosterAnimal} from './rooster/rooster';
 import {sheepAnimal} from './sheep/sheep';
 import {snakeAnimal} from './snake/snake';
 import {squirrelAnimal} from './squirrel/squirrel';
+import {tigerAnimal} from './tiger/tiger';
 import {turkeyAnimal} from './turkey/turkey';
 import {wolfAnimal} from './wolf/wolf';
 
@@ -54,6 +56,7 @@ export const animalList: Array<AnimalType> = [
     hedgehogAnimal,
     henAnimal,
     horseAnimal,
+    lionAnimal,
     lizardAnimal,
     moleAnimal,
     mouseAnimal,
@@ -66,6 +69,7 @@ export const animalList: Array<AnimalType> = [
     sheepAnimal,
     snakeAnimal,
     squirrelAnimal,
+    tigerAnimal,
     turkeyAnimal,
     wolfAnimal,
 ];

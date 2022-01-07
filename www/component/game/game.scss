@@ -32,6 +32,16 @@ $z-index-game-back-stage: 0;
     z-index: $z-index-game;
 }
 
+@keyframes show-food {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
 .action_block {
     align-items: center;
     display: flex;
@@ -47,7 +57,13 @@ $z-index-game-back-stage: 0;
 }
 
 .action_block__image {
+    animation-direction: normal;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-name: show-food;
     display: block;
+    filter: $game-element-shadow;
     height: 75%;
     object-fit: contain;
     object-position: center;
@@ -74,7 +90,22 @@ $z-index-game-back-stage: 0;
     z-index: $z-index-game;
 }
 
+@keyframes show-animal {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
 .drop_place_image {
+    animation-direction: normal;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-name: show-animal;
     display: block;
     filter: $game-element-shadow;
     height: 100%;
