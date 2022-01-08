@@ -34,6 +34,8 @@ declare const IS_PRODUCTION: unknown;
 
 declare const BUILD_DATE_H: unknown;
 
+declare const Android: {displayInterstitial: () => void} | undefined;
+
 /*
 declare module '*.scss';
 declare module '*.png';

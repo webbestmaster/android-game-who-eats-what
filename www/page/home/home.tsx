@@ -12,6 +12,7 @@ import {EndGame} from '../../component/end-game/end-game';
 import {MedalList} from '../../component/medal-list/medal-list';
 import {playAudio} from '../../hook/audio-player-hook/audio-player-helper';
 import {sfxAudioMap} from '../../audio/sfx/sfx';
+import {showInterstitialAd} from '../../util/ads';
 
 import homeStyle from './home.scss';
 
@@ -46,6 +47,7 @@ export function Home(): JSX.Element {
         setIsEndGamePopupOpen(false);
         setAnswerResultList([]);
         setNewRandomAnimal();
+        showInterstitialAd();
     }, [setNewRandomAnimal]);
 
     const onGoodAnswer: OnAnswerType = useCallback(
