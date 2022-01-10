@@ -9,6 +9,8 @@ export type AudioPlayerConfigType = {
 };
 
 export type AudioPlayerType = {
+    playAudioInHook: () => void;
     setIsMuted: (isMuted: boolean) => void;
     setVolume: (volume: number) => void;
+    stopAudioInHook: () => void;
 };

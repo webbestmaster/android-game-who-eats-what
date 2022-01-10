@@ -1,6 +1,7 @@
-/* global Audio, HTMLAudioElement */
+/* global Audio, HTMLAudioElement, Event */
 
 import {PromiseResolveType} from '../../util/promise';
+import {noop} from '../../util/function';
 
 const audioMap: Record<string, HTMLAudioElement> = {};
 
@@ -21,32 +22,41 @@ export function getAudioById(audioId: string): HTMLAudioElement {
 export type PlayAudioArgumentType = {
     audioId?: string;
     isMuted?: boolean;
+    onEnded?: () => void;
     src: string;
     volume?: number;
 };
 
 export function playAudio(playAudioData: PlayAudioArgumentType): Promise<unknown> {
     const {src} = playAudioData;
-    const {audioId = src, volume = 1, isMuted = false} = playAudioData;
+    const {audioId = src, volume = 1, isMuted = false, onEnded = noop} = playAudioData;
     const audio = getAudioById(audioId);
 
-    return new Promise((resolve: PromiseResolveType<void>, reject: PromiseResolveType<void>) => {
+    return new Promise((resolve: PromiseResolveType<void>, reject: PromiseResolveType<Error>) => {
         if (!String(audio.src).includes(src)) {
             audio.src = src;
         }
 
         // eslint-disable-next-line unicorn/prefer-add-event-listener
         audio.onended = () => {
+            console.log(`[playAudio] [onended]: ${src}, ${audioId}`);
+
+            // eslint-disable-next-line unicorn/prefer-add-event-listener, no-param-reassign
+            audio.onended = null;
+
             audio.src = '';
-            // eslint-disable-next-line unicorn/prefer-add-event-listener
-            audio.oncanplay = null;
             audio.currentTime = 0;
+
+            onEnded();
         };
 
         // eslint-disable-next-line unicorn/prefer-add-event-listener
         audio.oncanplay = async () => {
-            // eslint-disable-next-line unicorn/prefer-add-event-listener
+            console.log(`[playAudio] [oncanplay]: ${src}, ${audioId}`);
+
+            // eslint-disable-next-line unicorn/prefer-add-event-listener, no-param-reassign
             audio.oncanplay = null;
+
             // audio.playbackRate = 16;
 
             try {
@@ -59,15 +69,18 @@ export function playAudio(playAudioData: PlayAudioArgumentType): Promise<unknown
             } catch (tryToPlayError: unknown) {
                 console.log(`[ERROR] [playAudio]: ${src}`);
                 console.log(tryToPlayError);
-                reject();
+                reject(new Error(String(tryToPlayError)));
             }
         };
 
         // eslint-disable-next-line unicorn/prefer-add-event-listener
-        audio.onerror = () => {
-            // eslint-disable-next-line unicorn/prefer-add-event-listener
-            audio.oncanplay = null;
-            reject();
+        audio.onerror = (errorEvent: Event | string) => {
+            console.log(`[playAudio] [onerror]: ${src}, ${audioId}`);
+
+            // eslint-disable-next-line unicorn/prefer-add-event-listener, no-param-reassign
+            audio.onerror = null;
+
+            reject(new Error(String(errorEvent)));
         };
     });
 }
