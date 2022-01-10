@@ -3,7 +3,6 @@
 export function showInterstitialAd() {
     if (typeof Android === 'undefined') {
         setTimeout(() => {
-            // eslint-disable-next-line no-alert
             console.warn('show interstitial Ad');
         }, 0);
         return;
