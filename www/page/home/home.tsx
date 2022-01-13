@@ -1,4 +1,5 @@
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
+import {useDocumentVisibility} from 'react-system-hook';
 
 import {Game} from '../../component/game/game';
 import {useAudioPlayer} from '../../hook/audio-player-hook/audio-player-hook';
@@ -17,7 +18,7 @@ import {showInterstitialAd} from '../../util/ads';
 import homeStyle from './home.scss';
 
 export function Home(): JSX.Element {
-    useAudioPlayer({
+    const {play, pause} = useAudioPlayer({
         audioId: 'ambient',
         isLoop: true,
         isMuted: false,
@@ -31,6 +32,15 @@ export function Home(): JSX.Element {
     const [isEndGamePopupOpen, setIsEndGamePopupOpen] = useState<boolean>(false);
     const [answerResultList, setAnswerResultList] = useState<Array<AnswerResultType>>([]);
     const [animal, setAnimal] = useState<AnimalType>(getRandomItem<AnimalType>(animalList));
+    const isDocumentVisible = useDocumentVisibility();
+
+    useEffect(() => {
+        if (isDocumentVisible) {
+            play();
+        } else {
+            pause();
+        }
+    }, [isDocumentVisible, play, pause]);
 
     const setNewRandomAnimal = useCallback(() => {
         let newAnimal: AnimalType = getRandomItem<AnimalType>(animalList);

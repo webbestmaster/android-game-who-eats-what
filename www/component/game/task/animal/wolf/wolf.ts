@@ -7,7 +7,7 @@ import wolfImage2 from './image/wolf-2.svg';
 import wolfSound1 from './sound/wolf-1.mp3';
 
 export const wolfAnimal: AnimalType = {
-    foodIdList: [FoodEnum.rabbit],
+    foodIdList: [FoodEnum.rabbit, FoodEnum.meat],
     id: AnimalEnum.wolf,
     imageList: [wolfImage1, wolfImage2],
     soundList: [wolfSound1],

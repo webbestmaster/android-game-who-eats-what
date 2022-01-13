@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useMemo, useState} from 'react';
-import {useDocumentVisibility} from 'react-system-hook';
+// import {useDocumentVisibility} from 'react-system-hook';
 
 import {getRandomNumber} from '../../util/number';
 import {getNextArrayLoopIndex} from '../../util/array';
@@ -18,7 +18,7 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
         volume: audioVolumeInitial,
         isMuted: audioIsMutedInitial,
     } = config;
-    const [isPlaying] = useState<boolean>(isPlayingInitial);
+    const [isPlaying, setIsPlaying] = useState<boolean>(isPlayingInitial);
     const [isShuffle] = useState<boolean>(isShuffleInitial);
     const [trackList] = useState<Array<string>>(
         trackListInitial.length === 1 ? [...trackListInitial, ...trackListInitial] : trackListInitial
@@ -28,7 +28,7 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
     const [audioIndex, setAudioIndex] = useState<number>(isShuffleInitial ? getRandomNumber(0, trackList.length) : 0);
     const [volume, setVolume] = useState<number>(audioVolumeInitial);
     const [isMuted, setIsMuted] = useState<boolean>(audioIsMutedInitial);
-    const isDocumentVisible = useDocumentVisibility();
+    // const isDocumentVisible = useDocumentVisibility();
 
     const trackListLength = trackList.length;
 
@@ -62,7 +62,8 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
 
         const playAudioData: PlayAudioArgumentType = {
             audioId,
-            isMuted: !isDocumentVisible || isMuted,
+            // isMuted: !isDocumentVisible || isMuted,
+            isMuted,
             onEnded: onAudioEnded,
             src,
             volume,
@@ -78,8 +79,9 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
 
                 onAudioEnded();
             });
-    }, [audioId, isPlaying, onAudioEnded, trackList, audioIndex, volume, isDocumentVisible, isMuted]);
+    }, [audioId, isPlaying, onAudioEnded, trackList, audioIndex, volume, isMuted]);
 
+    /*
     useEffect(() => {
         console.log('/// begin - currentAudio = getAudioById');
 
@@ -89,6 +91,7 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
             const currentAudio = getAudioById(audioId);
 
             try {
+                setIsPlaying(false);
                 currentAudio.pause();
             } catch (pauseError: unknown) {
                 console.log(pauseError);
@@ -101,7 +104,9 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
             }
         };
     }, [audioId]);
+*/
 
+    /*
     useEffect(() => {
         const currentAudio = getAudioById(audioId);
 
@@ -111,11 +116,13 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
             console.log(volumeError);
         }
     }, [isDocumentVisible, audioId, isMuted]);
+*/
 
     const stopAudioInHook = useCallback(() => {
         const currentAudio = getAudioById(audioId);
 
         try {
+            setIsPlaying(false);
             currentAudio.pause();
             currentAudio.currentTime = 0;
         } catch (stopError: unknown) {
@@ -123,18 +130,37 @@ export function useAudioPlayer(config: AudioPlayerConfigType): AudioPlayerType {
         }
     }, [audioId]);
 
+    const pauseAudioInHook = useCallback(() => {
+        const currentAudio = getAudioById(audioId);
+
+        try {
+            setIsPlaying(false);
+            currentAudio.pause();
+        } catch (pauseError: unknown) {
+            console.log(pauseError);
+        }
+    }, [audioId]);
+
     const playAudioInHook = useCallback(async () => {
         const currentAudio = getAudioById(audioId);
 
         try {
+            setIsPlaying(true);
             await currentAudio.play();
-            currentAudio.currentTime = 0;
+            // currentAudio.currentTime = 0;
         } catch (playError: unknown) {
             console.log(playError);
         }
     }, [audioId]);
 
     return useMemo<AudioPlayerType>((): AudioPlayerType => {
-        return {playAudioInHook, setIsMuted, setVolume, stopAudioInHook};
-    }, [playAudioInHook, stopAudioInHook]);
+        return {
+            isPlaying,
+            pause: pauseAudioInHook,
+            play: playAudioInHook,
+            setIsMuted,
+            setVolume,
+            stop: stopAudioInHook,
+        };
+    }, [playAudioInHook, stopAudioInHook, pauseAudioInHook, isPlaying]);
 }
