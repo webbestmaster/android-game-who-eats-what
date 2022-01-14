@@ -9,3 +9,8 @@ export type PlaceType = {
     top: number;
     width: number;
 };
+
+export enum EnableDisableEnum {
+    disable = 'disable',
+    enable = 'enable',
+}

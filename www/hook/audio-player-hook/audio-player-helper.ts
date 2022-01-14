@@ -21,7 +21,7 @@ export function getAudioById(audioId: string): HTMLAudioElement {
 
 export type PlayAudioArgumentType = {
     audioId?: string;
-    isMuted?: boolean;
+    isMuted: boolean;
     onEnded?: () => void;
     src: string;
     volume?: number;
@@ -29,7 +29,7 @@ export type PlayAudioArgumentType = {
 
 export function playAudio(playAudioData: PlayAudioArgumentType): Promise<unknown> {
     const {src} = playAudioData;
-    const {audioId = src, volume = 1, isMuted = false, onEnded = noop} = playAudioData;
+    const {audioId = src, volume = 1, isMuted, onEnded = noop} = playAudioData;
     const audio = getAudioById(audioId);
 
     return new Promise((resolve: PromiseResolveType<void>, reject: PromiseResolveType<Error>) => {

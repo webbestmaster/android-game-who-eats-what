@@ -71,6 +71,6 @@ export function getPreviousArrayLoopIndex(array: Array<unknown>, currentIndex: n
     return decreasedIndex < 0 ? length - 1 : decreasedIndex;
 }
 
-export function getRandomItem<ItemType>(list: Array<ItemType>): ItemType {
+export function getRandomItem<ItemType>(list: Readonly<Array<ItemType>>): ItemType {
     return list[getRandomNumber(0, list.length)];
 }

@@ -10,13 +10,13 @@ import popupStyle from './popup.scss';
 type PropsType = {
     children: Array<JSX.Element> | JSX.Element | null;
     closePopup: () => void;
-    hasCloseButton: boolean;
+    hasCloseButton?: boolean; // default -> true
     isOpen: boolean;
-    themeName?: PopupThemeEnum;
+    themeName?: PopupThemeEnum; // default -> PopupThemeEnum.light
 };
 
 export function Popup(props: PropsType): JSX.Element | null {
-    const {isOpen, children, hasCloseButton, closePopup, themeName = PopupThemeEnum.light} = props;
+    const {isOpen, children, hasCloseButton = true, closePopup, themeName = PopupThemeEnum.light} = props;
     const body = getBody();
 
     if (!isOpen || !body) {

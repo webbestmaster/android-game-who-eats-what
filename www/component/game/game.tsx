@@ -16,12 +16,13 @@ import {FoodEnum, FoodType} from './task/food/food-type';
 
 type PropsType = {
     animal: AnimalType;
+    isSfxEnabled: boolean;
     onGoodAnswer: OnAnswerType;
     onWrongAnswer: OnAnswerType;
 };
 
 export function Game(props: PropsType): JSX.Element {
-    const {onGoodAnswer, animal, onWrongAnswer} = props;
+    const {onGoodAnswer, animal, onWrongAnswer, isSfxEnabled} = props;
     const [animalImage] = useState<string>(getRandomItem<string>(animal.imageList));
     const [isSwiped] = useState<boolean>(getRandomBoolean());
     const [questionFoodList] = useState<ArrayTrioType<FoodType>>(() => getQuestionFoodList(animal));
@@ -97,7 +98,10 @@ export function Game(props: PropsType): JSX.Element {
                 <button
                     className={gameStyle.drop_place}
                     onClick={() => {
-                        playAudio({src: getRandomItem<string>(animal.soundList)});
+                        playAudio({
+                            isMuted: !isSfxEnabled,
+                            src: getRandomItem<string>(animal.soundList),
+                        });
                     }}
                     style={dropPlaceData}
                     type="button"

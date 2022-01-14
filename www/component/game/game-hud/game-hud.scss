@@ -1,0 +1,25 @@
+.game_hud {
+    //background-color: #c00;
+    display: block;
+    min-height: 100px;
+    min-width: 100px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
+}
+
+.game_hud__button {
+    background-color: transparent;
+    border: 0;
+    display: block;
+    float: right;
+    margin: 0;
+    padding: 10px 5px;
+}
+
+.game_hud__button__image {
+    display: block;
+    height: auto;
+    width: 40px;
+}
