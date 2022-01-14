@@ -1,3 +1,5 @@
+/* global setTimeout */
+
 import {useCallback, useEffect, useState} from 'react';
 import {useDocumentVisibility} from 'react-system-hook';
 
@@ -97,11 +99,13 @@ export function Home(): JSX.Element {
             }
 
             playAudio({
-                audioId: animal.id + Math.random(),
+                audioId: animal.id,
                 isMuted: !isSfxEnabled,
-                onEnded: setNewRandomAnimal,
+                // onEnded: setNewRandomAnimal, // onEnded not works on old android
                 src: getRandomItem<string>(animal.soundList),
             });
+
+            setTimeout(setNewRandomAnimal, 3e3);
 
             console.log('game is end');
         },
