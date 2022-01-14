@@ -41,6 +41,7 @@ export function Game(props: PropsType): JSX.Element {
     );
     const [attemptCount, setAttemptCount] = useState<number>(0);
     const [activeBlockId, setActiveBlockId] = useState<FoodEnum | ''>('');
+    const [isAnimalEnabled, setIsAnimalEnabled] = useState<boolean>(true);
 
     const onTouchEnd = useCallback(
         (touchEndCoordinates: SingleTouchCoordinatesType) => {
@@ -52,7 +53,7 @@ export function Game(props: PropsType): JSX.Element {
                 width: dropPlaceData.width - extraAccuracy * 2,
             });
 
-            if (isInDropPlace && activeBlockId) {
+            if (isInDropPlace && activeBlockId && isAnimalEnabled) {
                 const newAttemptCount = attemptCount + 1;
 
                 setAttemptCount(newAttemptCount);
@@ -60,6 +61,7 @@ export function Game(props: PropsType): JSX.Element {
 
                 if (animal.foodIdList.includes(activeBlockId)) {
                     onGoodAnswer(onAnswerData);
+                    setIsAnimalEnabled(false);
                 } else {
                     onWrongAnswer(onAnswerData);
                 }
@@ -67,7 +69,7 @@ export function Game(props: PropsType): JSX.Element {
 
             setActiveBlockId('');
         },
-        [animal, dropPlaceData, onGoodAnswer, onWrongAnswer, activeBlockId, attemptCount]
+        [isAnimalEnabled, animal, dropPlaceData, onGoodAnswer, onWrongAnswer, activeBlockId, attemptCount]
     );
 
     const singleTouchArgument = useMemo(() => ({id: 'game', onTouchEnd}), [onTouchEnd]);

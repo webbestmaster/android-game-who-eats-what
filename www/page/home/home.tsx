@@ -23,16 +23,6 @@ import {EnableDisableEnum} from '../../util/type';
 import homeStyle from './home.scss';
 
 export function Home(): JSX.Element {
-    const {play, pause} = useAudioPlayer({
-        audioId: 'ambient',
-        isLoop: true,
-        isMuted: false,
-        isPlaying: true,
-        isShuffle: true,
-        trackList: ambientAudioList,
-        volume: 0.3,
-    });
-
     const maxGameCount = 10;
     const [isEndGamePopupOpen, setIsEndGamePopupOpen] = useState<boolean>(false);
     const [answerResultList, setAnswerResultList] = useState<Array<AnswerResultType>>([]);
@@ -45,6 +35,16 @@ export function Home(): JSX.Element {
         getFromLocalStorage(settingIsSfxEnabled) !== EnableDisableEnum.disable // default: true
     );
     const isDocumentVisible = useDocumentVisibility();
+
+    const {play, pause} = useAudioPlayer({
+        audioId: 'ambient',
+        isLoop: true,
+        isMuted: false,
+        isPlaying: isAmbientEnabled,
+        isShuffle: true,
+        trackList: ambientAudioList,
+        volume: 0.3,
+    });
 
     useEffect(() => {
         setToLocalStorage(
@@ -96,9 +96,12 @@ export function Home(): JSX.Element {
                 return;
             }
 
-            playAudio({isMuted: !isSfxEnabled, src: getRandomItem<string>(animal.soundList)});
-
-            setNewRandomAnimal();
+            playAudio({
+                audioId: animal.id + Math.random(),
+                isMuted: !isSfxEnabled,
+                onEnded: setNewRandomAnimal,
+                src: getRandomItem<string>(animal.soundList),
+            });
 
             console.log('game is end');
         },
