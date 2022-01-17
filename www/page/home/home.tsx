@@ -105,6 +105,7 @@ export function Home(): JSX.Element {
                 src: getRandomItem<string>(animal.soundList),
             });
 
+            // TODO: use onEnded instead of setTimeout
             setTimeout(setNewRandomAnimal, 2e3);
 
             console.log('game is end');
