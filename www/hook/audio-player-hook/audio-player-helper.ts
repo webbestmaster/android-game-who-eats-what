@@ -37,6 +37,7 @@ export function playAudio(playAudioData: PlayAudioArgumentType): Promise<unknown
             audio.src = src;
         }
 
+        // WARNING: onended works on Android 6.x+
         // eslint-disable-next-line unicorn/prefer-add-event-listener
         audio.onended = () => {
             console.log(`[playAudio] [onended]: ${src}, ${audioId}`);
