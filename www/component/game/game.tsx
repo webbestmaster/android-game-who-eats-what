@@ -1,5 +1,6 @@
 import {useCallback, useMemo, useState} from 'react';
 import {useScreenSize} from 'react-system-hook';
+import animateCss from 'animate.css/animate.min.css';
 
 import {useSingleTouch} from '../../hook/single-touch-hook/single-touch-hook';
 import {SingleTouchCoordinatesType} from '../../hook/single-touch-hook/single-touch-type';
@@ -99,28 +100,29 @@ export function Game(props: PropsType): JSX.Element {
             })}
 
             <div className={gameStyle.event_hunter} onTouchStart={() => setActiveBlockId('')}>
-                <button
-                    className={gameStyle.drop_place}
-                    onClick={() => {
-                        playAudio({
-                            isMuted: !isSfxEnabled,
-                            src: getRandomItem<string>(animal.soundList),
-                        });
-                    }}
-                    style={{
-                        ...dropPlaceData,
-                        ...(isGoodAnswer ? {animationName: 'shakeY'} : {}),
-                    }}
-                    type="button"
+                <div
+                    className={classNames(gameStyle.drop_place, {[animateCss.animate__shakeY]: isGoodAnswer})}
+                    style={dropPlaceData}
                 >
-                    <img
-                        alt={animal.id}
-                        className={classNames(gameStyle.drop_place_image, {
-                            [gameStyle.drop_place_image__swiped]: isSwiped,
-                        })}
-                        src={animalImage}
-                    />
-                </button>
+                    <button
+                        className={gameStyle.drop_place_button}
+                        onClick={() => {
+                            playAudio({
+                                isMuted: !isSfxEnabled,
+                                src: getRandomItem<string>(animal.soundList),
+                            });
+                        }}
+                        type="button"
+                    >
+                        <img
+                            alt={animal.id}
+                            className={classNames(gameStyle.drop_place_image, {
+                                [gameStyle.drop_place_image__swiped]: isSwiped,
+                            })}
+                            src={animalImage}
+                        />
+                    </button>
+                </div>
             </div>
 
             {questionFoodList.map((questionFood: FoodType, index: number): JSX.Element => {

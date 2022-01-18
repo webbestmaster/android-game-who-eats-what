@@ -75,11 +75,24 @@ export function getRandomItem<ItemType>(list: Readonly<Array<ItemType>>): ItemTy
     return list[getRandomNumber(0, list.length)];
 }
 
+export function hasAdditionalItem<ItemType>(
+    baseList: Readonly<Array<ItemType>>,
+    additionalList: Readonly<Array<ItemType>>
+): boolean {
+    return additionalList.some((item: ItemType): boolean => !baseList.includes(item));
+}
+
 export function getRandomNewItem<ItemType>(
     list: Readonly<Array<ItemType>>,
     oldItemList: Readonly<Array<ItemType>>
 ): ItemType {
     let newItem: ItemType = getRandomItem<ItemType>(list);
+
+    if (!hasAdditionalItem<ItemType>(oldItemList, list)) {
+        console.error('[getRandomNewItem]');
+        console.log(oldItemList, list);
+        return newItem;
+    }
 
     // eslint-disable-next-line no-loops/no-loops
     while (oldItemList.includes(newItem)) {
