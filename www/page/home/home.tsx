@@ -75,8 +75,9 @@ export function Home(): JSX.Element {
         setIsEndGamePopupOpen(false);
         setAnswerResultList([]);
         setNewRandomAnimal();
+        setBackground(getRandomNewItem<string>(backgroundList, [background]));
         showInterstitialAd();
-    }, [setNewRandomAnimal]);
+    }, [setNewRandomAnimal, background]);
 
     const onGoodAnswer: OnAnswerType = useCallback(
         (answerResult: AnswerResultType) => {
