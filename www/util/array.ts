@@ -74,3 +74,17 @@ export function getPreviousArrayLoopIndex(array: Array<unknown>, currentIndex: n
 export function getRandomItem<ItemType>(list: Readonly<Array<ItemType>>): ItemType {
     return list[getRandomNumber(0, list.length)];
 }
+
+export function getRandomNewItem<ItemType>(
+    list: Readonly<Array<ItemType>>,
+    oldItemList: Readonly<Array<ItemType>>
+): ItemType {
+    let newItem: ItemType = getRandomItem<ItemType>(list);
+
+    // eslint-disable-next-line no-loops/no-loops
+    while (oldItemList.includes(newItem)) {
+        newItem = getRandomItem<ItemType>(list);
+    }
+
+    return newItem;
+}

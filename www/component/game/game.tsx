@@ -31,6 +31,7 @@ export function Game(props: PropsType): JSX.Element {
         foodToImage(questionFoodList[1]),
         foodToImage(questionFoodList[2]),
     ]);
+    const [isGoodAnswer, setIsGoodAnswer] = useState<boolean>(false);
     const {width, height} = useScreenSize();
     const minScreenSize = Math.min(width, height);
     const dishSize = Math.round(minScreenSize / 3.5);
@@ -61,6 +62,7 @@ export function Game(props: PropsType): JSX.Element {
 
                 if (animal.foodIdList.includes(activeBlockId)) {
                     onGoodAnswer(onAnswerData);
+                    setIsGoodAnswer(true);
                     setIsAnimalEnabled(false);
                 } else {
                     onWrongAnswer(onAnswerData);
@@ -105,7 +107,10 @@ export function Game(props: PropsType): JSX.Element {
                             src: getRandomItem<string>(animal.soundList),
                         });
                     }}
-                    style={dropPlaceData}
+                    style={{
+                        ...dropPlaceData,
+                        ...(isGoodAnswer ? {animationName: 'shakeY'} : {}),
+                    }}
                     type="button"
                 >
                     <img
