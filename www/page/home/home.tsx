@@ -1,5 +1,4 @@
 import {useCallback, useEffect, useState} from 'react';
-import {useDocumentVisibility} from 'react-system-hook';
 
 import {Game} from '../../component/game/game';
 import {useAudioPlayer} from '../../hook/audio-player-hook/audio-player-hook';
@@ -20,6 +19,7 @@ import {getFromLocalStorage, setToLocalStorage} from '../../util/local-storage';
 import {settingIsAmbientEnabled, settingIsSfxEnabled} from '../../component/game/game-const';
 import {EnableDisableEnum} from '../../util/type';
 import {backgroundList} from '../../component/game/ui/background';
+import {useIsAppActive} from '../../util/android-web-view';
 
 import homeStyle from './home.scss';
 
@@ -35,7 +35,8 @@ export function Home(): JSX.Element {
     const [isSfxEnabled, setIsSfxEnabled] = useState<boolean>(
         getFromLocalStorage(settingIsSfxEnabled) !== EnableDisableEnum.disable // default: true
     );
-    const isDocumentVisible = useDocumentVisibility();
+
+    const isAppActive = useIsAppActive();
 
     const {play, pause} = useAudioPlayer({
         audioId: 'ambient',
@@ -56,12 +57,12 @@ export function Home(): JSX.Element {
     }, [isAmbientEnabled, isSfxEnabled]);
 
     useEffect(() => {
-        if (isDocumentVisible && isAmbientEnabled) {
+        if (isAppActive && isAmbientEnabled) {
             play();
         } else {
             pause();
         }
-    }, [isAmbientEnabled, isDocumentVisible, play, pause]);
+    }, [isAmbientEnabled, isAppActive, play, pause]);
 
     const setNewRandomAnimal = useCallback(() => {
         setAnimal(getRandomNewItem<AnimalType>(animalList, [animal]));

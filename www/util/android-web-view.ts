@@ -2,7 +2,7 @@
 
 import {useCallback, useEffect, useMemo, useState} from 'react';
 
-export function useAppIsActive(): boolean {
+export function useIsAppActive(): boolean {
     const [isActive, setIsActive] = useState<boolean>(true);
 
     const appPauseEventName = 'appPause';
