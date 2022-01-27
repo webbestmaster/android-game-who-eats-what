@@ -7,8 +7,11 @@ export function showInterstitialAd() {
         }, 0);
         return;
     }
+
     setTimeout(() => {
-        Android.displayInterstitial();
+        if ('displayInterstitial' in (Android || {}) && typeof Android?.displayInterstitial === 'function') {
+            Android?.displayInterstitial();
+        }
     }, 0);
 }
 

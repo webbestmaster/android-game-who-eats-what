@@ -40,7 +40,10 @@ declare const IS_PRODUCTION: unknown;
 
 declare const BUILD_DATE_H: unknown;
 
-declare const Android: {displayInterstitial: () => void} | undefined;
+declare const Android: ?{
+    displayInterstitial?: () => void;
+    onAppLoaded?: () => void;
+};
 
 /*
 declare module '*.scss';

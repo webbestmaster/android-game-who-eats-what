@@ -1,4 +1,4 @@
-/* global document */
+/* global window, document, setTimeout */
 
 import {StrictMode} from 'react';
 import {hydrate, render} from 'react-dom';
@@ -6,6 +6,7 @@ import {hydrate, render} from 'react-dom';
 import {selector} from './const';
 import {App, AppPropsType} from './component/app/app';
 import {defaultServerDataContextConst} from './provider/server-data/server-data-context-const';
+import {onAppLoaded} from './util/android-app-loaded';
 
 (function main() {
     const nodeWrapper = document.querySelector(selector.appWrapper);
@@ -31,6 +32,8 @@ import {defaultServerDataContextConst} from './provider/server-data/server-data-
     if (innerHTML.trim() === '') {
         console.log('[main]: Render App as SPA');
         render(appNode, nodeWrapper);
+        setTimeout(onAppLoaded, 2e3);
+        window.addEventListener('load', onAppLoaded, false);
         return;
     }
 
