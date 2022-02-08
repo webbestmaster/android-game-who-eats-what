@@ -13,6 +13,7 @@ import {cowAnimal} from './cow/cow';
 import {deerAnimal} from './deer/deer';
 import {dogAnimal} from './dog/dog';
 import {donkeyAnimal} from './donkey/donkey';
+import {elephantAnimal} from './elephant/elephant';
 import {elkAnimal} from './elk/elk';
 import {foxAnimal} from './fox/fox';
 import {frogAnimal} from './frog/frog';
@@ -48,6 +49,7 @@ export const animalList: Array<AnimalType> = [
     deerAnimal,
     dogAnimal,
     donkeyAnimal,
+    elephantAnimal,
     elkAnimal,
     foxAnimal,
     frogAnimal,

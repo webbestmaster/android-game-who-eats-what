@@ -10,6 +10,7 @@ export enum AnimalEnum {
     deer = 'deer',
     dog = 'dog',
     donkey = 'donkey',
+    elephant = 'elephant',
     elk = 'elk',
     fox = 'fox',
     frog = 'frog',
