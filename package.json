@@ -50,7 +50,7 @@
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
     "animate.css": "^4.1.1",
-    "es5-shim": "^4.6.4",
+    "es5-shim": "^4.6.5",
     "es6-shim": "^0.35.6",
     "es7-object-polyfill": "^1.0.1",
     "polyfill-array-includes": "^2.0.0",
